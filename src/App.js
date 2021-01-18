@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import Login from './Views/Login/Login'
 import './App.css';
 
 function App() {
+  const [page, setPage] = useState('Login')
+
+  const renderPage = () => {
+    switch (page) {
+      case page === 'login':
+        return <Login navigateTo={setPage}/>
+      case page === 'office':
+        return <Login navigateTo={setPage}/>
+      case page === 'createOffice':
+        return <Login navigateTo={setPage}/>
+      case page === 'controlPanel':
+        return <Login navigateTo={setPage}/>
+      default:
+        return <Login navigateTo={setPage}/>
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {renderPage()}
     </div>
   );
 }
