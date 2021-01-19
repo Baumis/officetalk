@@ -18,9 +18,9 @@ function Login(props) {
 
     const login = () => {
         if (loginType === 'user') {
-            props.navigateTo('Office')
+            props.navigateTo('office')
         } else {
-            props.navigateTo('ControlPanel')
+            props.navigateTo('controlPanel')
         }
     }
 
@@ -29,7 +29,7 @@ function Login(props) {
             <div className="login-title">
                 Log in to OfficeTalk
             </div>
-            <div className="login-card">
+            <div className="login-card block-shadow">
                 <div className="login-card-tabs">
                     <div className={`login-card-tab ${isActive('user')}`} onClick={() => setLoginType('user')}>
                         User
@@ -58,7 +58,7 @@ function Login(props) {
                     />
                 </div>
                 <div className="login-input-row">
-                    <div className="login-button" style={{background: loginType === 'organization' && '#F74040'}} onClick={() => login()}>
+                    <div className="OTButton" style={{background: loginType === 'organization' && '#F74040'}} onClick={() => login()}>
                         Log in
                     </div>
                 </div>

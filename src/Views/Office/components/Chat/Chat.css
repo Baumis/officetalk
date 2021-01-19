@@ -1,0 +1,34 @@
+.chat {
+    flex: 1;
+    display: flex;
+    max-width: 350px;
+    flex-grow: 1;
+    background: white;
+    margin-top: 1px;
+    flex-direction: column;
+}
+
+.chat-messages {
+    flex: 1;
+    display: flex;
+}
+
+.chat-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.chat-controls input {
+    flex: 1;
+    padding: 10px;
+    background: #e4e5e7;
+    border: none;
+    border-radius: 8px;
+}
+
+.chat-send {
+    margin: 10px;
+    color: #1CBF73
+}

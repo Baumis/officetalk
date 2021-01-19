@@ -1,0 +1,11 @@
+.office {
+    display: flex;
+    background: #f5f5f5;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.office-content {
+    display: flex;
+    flex: 1;
+}
