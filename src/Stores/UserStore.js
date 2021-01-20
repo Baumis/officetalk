@@ -1,12 +1,11 @@
 import { makeAutoObservable } from 'mobx'
 
 class UserStore {
-    socket = null
 
-    constructor() {
+    constructor(rootStore) {
+        this.rootStore = rootStore
         makeAutoObservable(this)
     }
 }
 
-const storeInstance = new UserStore()
-export default storeInstance;
+export default UserStore;

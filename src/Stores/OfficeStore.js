@@ -1,12 +1,17 @@
 import { makeAutoObservable } from 'mobx'
 
 class OfficeStore {
-    socket = null
+    rooms = [{
+        name: 'Kahvihuone'
+    },
+    {
+        name: 'Laniluona'
+    }]
 
-    constructor() {
+    constructor(rootStore) {
+        this.rootStore = rootStore
         makeAutoObservable(this)
     }
 }
 
-const storeInstance = new OfficeStore()
-export default storeInstance;
+export default OfficeStore

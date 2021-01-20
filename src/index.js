@@ -2,16 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import OfficeStore from './Stores/OfficeStore'
-import UserStore from './Stores/UserStore'
+import RootStore from './Stores/RootStore'
+import { Provider } from 'mobx-react';
 
-export const StoreContext = React.createContext();
+export const StoreContext = React.createContext(RootStore);
 
 ReactDOM.render(
-  <StoreContext.Provider value={{ OfficeStore, UserStore }}>
+  <Provider value={StoreContext}>
     <React.StrictMode>
       <App />
     </React.StrictMode>
-  </StoreContext.Provider>,
+  </Provider>,
   document.getElementById('root')
 );
