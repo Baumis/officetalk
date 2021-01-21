@@ -24,9 +24,10 @@
 
 .chat-controls input {
     flex: 1;
-    padding: 10px;
+    padding: 15px;
     background: #e4e5e7;
     border: none;
+    font-size: 15px;
     border-radius: 8px;
 }
 

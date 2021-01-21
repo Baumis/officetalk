@@ -1,21 +1,87 @@
 .room {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     width: 200px;
     height: 300px;
-    border-right: 3px solid #404145;
-    border-top: 3px solid #404145;
-    border-bottom: 3px solid #404145;
+    border-right: 4px solid #404145;
+    border-top: 4px solid #404145;
+    border-bottom: 4px solid #404145;
     background: #e4e5e7;
     background-image:url('../../../../../../Assets/parquet3.png');
     box-sizing: border-box;
 }
 
+.bottom-room {
+    flex-direction: column-reverse;
+}
+
 .first-block {
-    border-left: 3px solid #404145;
+    border-left: 4px solid #404145;
 }
 
 .last-block {
-    border-right: 3px solid #404145;
+    border-right: 4px solid #404145;
+}
+
+.room-top {
+    display: flex;
+    justify-content: center;
+    color: black;
+    font-weight: 600;
+    margin-top: -30px;
+    margin-bottom: 9px;
+}
+
+.room-content {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap
+}
+
+.room-bottom {
+    display: flex;
+    justify-content: center;
+}
+
+.room-door {
+    width: 60px;
+    height: 4px;
+    background: #e4e5e7;
+    margin-bottom: -4px;
+}
+
+.bottom-room .room-door {
+    margin-top: -4px;
+}
+
+.bottom-room .room-top {
+    margin-bottom: -30px;
+    margin-top: 9px;
+}
+
+.room-square {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid transparent;
+    min-width: 33%;
+}
+
+.room-square:hover {
+    background: rgba(255,255,255, 0.2);
+}
+
+.user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-image:url('https://deadline.com/wp-content/uploads/2018/02/bill-gates-2.jpg?w=792');
+    background-size: cover;
+    background-position:center center;
+    border: 1px solid black;
+    color: white;
+    height: 40px;
+    width: 40px;
 }

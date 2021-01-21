@@ -1,18 +1,30 @@
 .hallway {
     display: flex;
-    justify-content: center;
-    align-items: center;
     width: 200px;
     height: 120px;
     background: #e4e5e7;
     background-image:url('../../../../../../Assets/parquet3.png');
     box-sizing: border-box;
+    flex-wrap: wrap;
 }
 
 .first-block {
-    border-left: 3px solid #404145;
+    border-left: 4px solid #404145;
 }
 
 .last-block {
-    border-right: 3px solid #404145;
+    border-right: 4px solid #404145;
+}
+
+.hallway-square {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid transparent;
+    min-height: 33%;
+}
+
+.hallway-square:hover {
+    background: rgba(255,255,255, 0.2);
 }

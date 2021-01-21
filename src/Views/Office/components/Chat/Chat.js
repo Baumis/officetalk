@@ -10,8 +10,8 @@ function Chat(props) {
     return (
         <div className="chat block-shadow">
             <div className="chat-messages">
-                {officeStore.messages.map(message => 
-                    <Message message={message}/>
+                {officeStore.messages.map((message, key) => 
+                    <Message key={key} message={message}/>
                 )}
             </div>
             <div className="chat-controls">
