@@ -12,28 +12,28 @@ class OfficeStore {
     }]
 
     users = [{
-        name: 'Axel',
+        name: 'Axel Baumgartner',
         room: 0
     },
     {
-        name: 'Esko',
+        name: 'Esko Kaurismäki',
         room: 1
     },
     {
-        name: 'Peter',
+        name: 'Peter Hilden',
         room: 2
     }]
 
     messages = [{
-        sender: 'Peter',
+        author: 'Peter Hilden',
         content: 'Tää on tosi kiva toimisto.'
     },
     {
-        name: 'Esko',
+        author: 'Esko Kaurismäki',
         content: 'Eihän tää oo ees valmis :D'
     },
     {
-        name: 'Axel',
+        author: 'Axel Baumgartner',
         content: 'Moi Esko.'
     }]
 

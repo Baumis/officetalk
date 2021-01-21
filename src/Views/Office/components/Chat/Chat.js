@@ -1,13 +1,18 @@
-import { useState } from 'react';
+import {useState, useContext} from 'react'
 import './Chat.css';
+import Message from './Message/Message';
+import { StoreContext } from '../../../../index'
 
 function Chat(props) {
     const [message, setMessage] = useState('')
+    const officeStore = useContext(StoreContext).officeStore
 
     return (
         <div className="chat block-shadow">
             <div className="chat-messages">
-
+                {officeStore.messages.map(message => 
+                    <Message message={message}/>
+                )}
             </div>
             <div className="chat-controls">
                 <input 
