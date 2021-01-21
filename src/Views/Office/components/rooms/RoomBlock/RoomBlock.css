@@ -1,8 +1,6 @@
-.room-block {
-    
-}
-
 .room-block-empty {
+    border-top: 3px solid #404145;
+    box-sizing: border-box;
     width: 200px;
     height: 300px;
 }

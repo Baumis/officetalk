@@ -21,7 +21,7 @@ function RoomBlock(props) {
                     last={props.last}
                 />
                 :
-                <div className="room-block-empty"></div>
+                <div className="room-block-empty" style={{height: props.minimal && '0px'}}></div>
             }
         </div>
     );

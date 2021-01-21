@@ -6,7 +6,8 @@ import { StoreContext } from '../../../../index'
 
 const Rooms = observer(() => {
     const officeStore = useContext(StoreContext).officeStore
-    const roomsCount = officeStore.rooms.length
+    //const roomsCount = officeStore.rooms.length
+    const roomsCount = 2
 
     if (roomsCount < 3) {
         return (
@@ -15,11 +16,13 @@ const Rooms = observer(() => {
                     first
                     display
                     displayBoth={false}
+                    minimal
                 />
                 <RoomBlock
                     last
                     display
                     displayBoth={false}
+                    minimal
                 />
             </div>
         )
