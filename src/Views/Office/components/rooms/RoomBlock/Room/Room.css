@@ -65,7 +65,10 @@
     justify-content: center;
     align-items: center;
     border: 1px solid transparent;
-    min-width: 33%;
+    min-width: 30px;
+    max-width: 31px;
+    min-height: 33px;
+    max-height: 35px;
 }
 
 .room-square:hover {
