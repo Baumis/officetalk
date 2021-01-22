@@ -1,6 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 
 class OfficeStore {
+    rootStore
+
     rooms = [{
         name: 'Kahvihuone'
     },
@@ -12,16 +14,19 @@ class OfficeStore {
     }]
 
     users = [{
+        id: 1,
         name: 'Axel Baumgartner',
-        room: 0
+        position: { room: -1, position: 0 }
     },
     {
+        id: 2,
         name: 'Esko Kaurismäki',
-        room: 1
+        position: { room: -1, position: 0 }
     },
     {
+        id: 3,
         name: 'Peter Hilden',
-        room: 2
+        position: { room: -1, position: 0 }
     }]
 
     messages = [{
@@ -40,6 +45,17 @@ class OfficeStore {
     constructor(rootStore) {
         this.rootStore = rootStore
         makeAutoObservable(this)
+    }
+
+    sendMessage = (content) => {
+        this.messages.push({author: 'Axel Baumgartner', content: content})
+    }
+
+    changePosition = (id, position) => {
+        let usersClone = JSON.parse(JSON.stringify(this.users))
+        console.log(usersClone)
+        usersClone.find(user => user.id === id).position = position
+        this.users = usersClone
     }
 }
 

@@ -10,15 +10,11 @@ function RoomBlock(props) {
                 first={props.first}
                 last={props.last}
                 room={props.roomTop}
-                setPosition={props.setPosition}
-                users={props.users}
             />
             <Hallway
                 first={props.first}
                 last={props.last}
                 bottomBorder={!props.displayBoth}
-                setPosition={props.setPosition}
-                users={props.users}
                 id={props.hallwayId}
             />
             { props.displayBoth ?
@@ -27,8 +23,6 @@ function RoomBlock(props) {
                     last={props.last}
                     room={props.roomBottom}
                     bottomRoom
-                    setPosition={props.setPosition}
-                    users={props.users}
                 />
                 :
                 <div className="room-block-empty" style={{ height: props.minimal && '0px' }}></div>

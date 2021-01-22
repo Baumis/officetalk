@@ -1,13 +1,16 @@
 import './Hallway.css'
+import { rootstore } from '../../../../../../index'
+import { observer } from 'mobx-react'
 
-function Hallway(props) {
+const Hallway = observer((props) => {
+    const officeStore = rootstore.officeStore
 
     const roomGrid = () => {
         const grid = []
         for (let i = 0; i < 8; i++) {
             grid.push(
-                <div className="hallway-square" roomId={i} onClick={() => props.setPosition({ name: 'A', room: props.id, position: i })}>
-                    {props.users.find(user => user.room === props.id && user.position === i) &&
+                <div className="hallway-square" key={i} onClick={() => officeStore.changePosition(1, { room: props.id, position: i })}>
+                    {officeStore.users.find(user => user.position.room === props.id && user.position.position === i) &&
                         <div className="user-avatar">
                         </div>
                     }
@@ -22,6 +25,6 @@ function Hallway(props) {
             {roomGrid()}
         </div>
     );
-}
+})
 
 export default Hallway

@@ -5,7 +5,6 @@ import UserStore from "./UserStore"
 class RootStore {
     officeStore
     userStore
-    text = "moi"
 
     constructor() {
         this.officeStore = new OfficeStore(this)
@@ -14,5 +13,6 @@ class RootStore {
     }
 }
 
-const storeInstance = new RootStore()
-export default storeInstance;
+export default RootStore
+/*const storeInstance = new RootStore()
+export default storeInstance;*/
