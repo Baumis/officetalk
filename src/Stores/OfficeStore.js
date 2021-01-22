@@ -16,17 +16,17 @@ class OfficeStore {
     users = [{
         id: 1,
         name: 'Axel Baumgartner',
-        position: { room: -1, position: 0 }
+        position: { room: 1, cordinates: {x: 10, y: 2} }
     },
     {
         id: 2,
         name: 'Esko Kaurismäki',
-        position: { room: -1, position: 0 }
+        position: { room: 2, cordinates: {x: 50, y: 120} }
     },
     {
         id: 3,
         name: 'Peter Hilden',
-        position: { room: -1, position: 0 }
+        position: { room: 2, cordinates: {x: 5, y: 20} }
     }]
 
     messages = [{

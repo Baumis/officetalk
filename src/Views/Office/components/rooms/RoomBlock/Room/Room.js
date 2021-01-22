@@ -5,12 +5,26 @@ import { rootstore } from '../../../../../../index'
 const Room = observer((props) => {
     const officeStore = rootstore.officeStore
 
+    const moveToPosition = (event) => {
+        console.log(event.clientX)
+    }
+
     return (
         <div className={`room ${props.first && 'first-block'} ${props.last && 'last-block'} ${props.bottomRoom && 'bottom-room'}`}>
             <div className="room-top">
                 {props.room.name}
             </div>
-            <div className="room-content">
+            <div className="room-content" onClick={(event) => moveToPosition(event)}>
+                {officeStore.users.map(user => {
+                    if (user.position.room === props.room.id) {
+                        return (
+                            <div className="user-avatar" style={{
+                                top: user.position.cordinates.y,
+                                left: user.position.cordinates.x
+                            }}></div>
+                        )
+                    }
+                })}
             </div>
             <div className="room-bottom">
                 <div className="room-door"></div>

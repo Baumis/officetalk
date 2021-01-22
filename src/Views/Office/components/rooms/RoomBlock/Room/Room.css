@@ -35,7 +35,6 @@
 .room-content {
     flex: 1;
     display: flex;
-    flex-wrap: wrap
 }
 
 .room-bottom {
@@ -77,6 +76,7 @@
 
 .user-avatar {
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
