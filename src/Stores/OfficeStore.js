@@ -53,7 +53,6 @@ class OfficeStore {
 
     changePosition = (id, position) => {
         let usersClone = JSON.parse(JSON.stringify(this.users))
-        console.log(usersClone)
         usersClone.find(user => user.id === id).position = position
         this.users = usersClone
     }
