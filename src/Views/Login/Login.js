@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import './Login.css';
+import { rootstore } from '../../index'
 
 function Login(props) {
+    const userStore = rootstore.userStore
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
     const [loginType, setLoginType] = useState('user')
 
     const isActive = (tab) => {
@@ -16,18 +19,32 @@ function Login(props) {
         return ''
     }
 
-    const login = () => {
+    /*const login = () => {
         if (loginType === 'user') {
             props.navigateTo('office')
         } else {
             props.navigateTo('controlPanel')
+        }
+    }*/
+
+    const signIn = async () => {
+        try {
+            setLoading(true)
+            await userStore.signIn(username, password)
+            props.navigateTo('office')
+            setLoading(false)
+
+        } catch (error) {
+            setLoading(false)
+            setPassword('')
+            console.log(error)
         }
     }
 
     return (
         <div className="login">
             <div className="login-title">
-                Log in to OfficeTalk
+                Sign in to OfficeTalk
             </div>
             <div className="login-card block-shadow">
                 <div className="login-card-tabs">
@@ -58,8 +75,8 @@ function Login(props) {
                     />
                 </div>
                 <div className="login-input-row">
-                    <div className="OTButton" style={{background: loginType === 'organization' && '#F74040'}} onClick={() => login()}>
-                        Log in
+                    <div className="OTButton" style={{background: loginType === 'organization' && '#F74040'}} onClick={() => signIn()}>
+                        Sign in
                     </div>
                 </div>
             </div>
