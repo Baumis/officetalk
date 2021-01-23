@@ -1,7 +1,9 @@
 import { makeAutoObservable } from 'mobx'
+import Organization from '../Services/Organization'
 
 class OfficeStore {
     rootStore
+    organization
 
     rooms = [{
         name: 'Kahvihuone'
@@ -45,6 +47,11 @@ class OfficeStore {
     constructor(rootStore) {
         this.rootStore = rootStore
         makeAutoObservable(this)
+    }
+
+    getOrganization = async (id) => {
+        this.organization = await Organization.getOrganization(id)
+        return this.organization
     }
 
     sendMessage = (content) => {
