@@ -21,7 +21,7 @@ class OfficeStore {
     {
         id: 2,
         name: 'Esko Kaurismäki',
-        position: { room: 2, cordinates: {x: 50, y: 120} }
+        position: { room: 2, cordinates: {x: 50, y: 130} }
     },
     {
         id: 3,

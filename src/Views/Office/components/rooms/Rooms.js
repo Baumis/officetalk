@@ -2,7 +2,6 @@ import './Rooms.css'
 import { observer } from 'mobx-react';
 import RoomBlock from './RoomBlock/RoomBlock'
 import { rootstore } from '../../../../index'
-import { useEffect } from 'react';
 
 const Rooms = observer(() => {
     const officeStore = rootstore.officeStore

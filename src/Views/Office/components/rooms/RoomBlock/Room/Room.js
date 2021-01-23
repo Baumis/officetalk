@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react'
 import './Room.css';
 import { rootstore } from '../../../../../../index'
+import Avatar from '../../../Avatar/Avatar';
 
 const Room = observer((props) => {
     const officeStore = rootstore.officeStore
@@ -18,19 +19,10 @@ const Room = observer((props) => {
                 {props.room.name}
             </div>
             <div className="room-content" onClick={(event) => moveToPosition(event)}>
-                {officeStore.users.map(user => {
-                    if (user.position.room === props.room.id) {
-                        return (
-                            <div className="user-avatar" key={user.id} style={{
-                                top: user.position.cordinates.y,
-                                left: user.position.cordinates.x
-                            }}></div>
-                        )
-                    }
-                })}
+                {officeStore.users.map(user => user.position.room === props.room.id && <Avatar key={user.id} user={user} /> )}
             </div>
             <div className="room-bottom">
-                <div className="room-door"></div>
+                <div className="room-door" id={`door${props.room.id}`}></div>
             </div>
         </div>
     )

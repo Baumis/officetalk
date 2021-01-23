@@ -1,0 +1,17 @@
+.avatar {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-image:url('https://deadline.com/wp-content/uploads/2018/02/bill-gates-2.jpg?w=792');
+    background-size: cover;
+    background-position:center center;
+    border: 1px solid black;
+    color: white;
+    margin-top: -20px;
+    margin-left: -20px;
+    height: 40px;
+    width: 40px;
+    transition: all 2s ease 0s;
+}
