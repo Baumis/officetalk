@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx'
+import SignIn from '../Services/SignIn'
 import signIn from '../Services/SignIn'
 
 class UserStore {
@@ -18,6 +19,11 @@ class UserStore {
     checkSignIn = async () => {
         this.user = await signIn.signInWithToken()
         return this.user
+    }
+
+    signOut = async () => {
+        await SignIn.SignOut()
+        this.user = null
     }
 
 }

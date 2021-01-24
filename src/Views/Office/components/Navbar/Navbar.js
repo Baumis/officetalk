@@ -7,6 +7,11 @@ const Navbar = observer((props) => {
     const userStore = rootstore.userStore
     const officeStore = rootstore.officeStore
 
+    const signOut = () => {
+        userStore.signOut()
+        props.navigateTo('login')
+    }
+
     return (
         <div className="navbar block-shadow">
             <div className="navbar-logo">
@@ -20,7 +25,7 @@ const Navbar = observer((props) => {
                 {userStore.user.name}
                 <div className="navbar-user-avatar">
                 </div>
-                <div className="navbar-sign-out">
+                <div className="navbar-sign-out" onClick={() => signOut()}>
                     Sign out
                 </div>
             </div>

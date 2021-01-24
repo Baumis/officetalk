@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import './Office.css';
-import { observer } from 'mobx-react'
+import { observer, PropTypes } from 'mobx-react'
 import Navbar from './components/Navbar/Navbar'
 import Chat from './components/Chat/Chat'
 import Rooms from './components/rooms/Rooms'
 import { rootstore } from '../../index'
 import Loading from './components/Loading/Loading';
 
-const Office = observer(() => {
+const Office = observer((props) => {
     const officeStore = rootstore.officeStore
     const userStore = rootstore.userStore
     const [loading, setLoading] = useState(false)
@@ -19,7 +19,7 @@ const Office = observer(() => {
             setLoading(false)
         }
         fetchOrganization()
-    },[officeStore, userStore])
+    }, [officeStore, userStore])
 
     if (!officeStore.office) {
         return <Loading />
@@ -27,7 +27,9 @@ const Office = observer(() => {
 
     return (
         <div className="office">
-            <Navbar />
+            <Navbar
+                navigateTo={props.navigateTo}
+            />
             <div className="office-body">
                 <Chat />
                 <Rooms />

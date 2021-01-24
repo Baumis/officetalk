@@ -19,14 +19,6 @@ function Login(props) {
         return ''
     }
 
-    /*const login = () => {
-        if (loginType === 'user') {
-            props.navigateTo('office')
-        } else {
-            props.navigateTo('controlPanel')
-        }
-    }*/
-
     const signIn = async () => {
         try {
             setLoading(true)

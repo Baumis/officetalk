@@ -16,4 +16,9 @@ const signInOrganization = async (credentials) => {
     return response.data
 }
 
-export default { signInWithToken, signInEmployee, signInOrganization }
+const SignOut = async () => {
+    const response = await axios.post(`${baseUrl}/signout`)
+    return response.data
+}
+
+export default { signInWithToken, signInEmployee, signInOrganization, SignOut }
