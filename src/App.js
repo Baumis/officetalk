@@ -9,13 +9,13 @@ function App() {
   const [page, setPage] = useState('login')
 
   useEffect(() => {
-    checkLogin()
-  })
+    const checkLogin = async () => {
+      const user = await userStore.checkSignIn()
+      user && setPage('office')
+    }
 
-  const checkLogin = async () => {
-    const user = await userStore.checkSignIn()
-    user && setPage('office')
-  }
+    checkLogin()
+  }, [])
 
   const renderPage = () => {
     switch (page) {

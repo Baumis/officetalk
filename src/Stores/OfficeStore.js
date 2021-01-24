@@ -3,17 +3,7 @@ import Organization from '../Services/Organization'
 
 class OfficeStore {
     rootStore
-    organization
-
-    rooms = [{
-        name: 'Kahvihuone'
-    },
-    {
-        name: 'Laniluona'
-    },
-    {
-        name: 'Työhuone'
-    }]
+    office
 
     users = [{
         id: 1,
@@ -49,9 +39,9 @@ class OfficeStore {
         makeAutoObservable(this)
     }
 
-    getOrganization = async (id) => {
-        this.organization = await Organization.getOrganization(id)
-        return this.organization
+    fetchOffice = async (id) => {
+        this.office = await Organization.getOrganization(id).office
+        return this.office
     }
 
     sendMessage = (content) => {
