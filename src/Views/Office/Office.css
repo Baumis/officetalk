@@ -8,4 +8,11 @@
 .office-body {
     display: flex;
     flex: 1;
+    overflow: hidden;
+}
+
+.office-body-scrollable {
+    display: flex;
+    flex: 1;
+    overflow: auto;
 }

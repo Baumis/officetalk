@@ -32,7 +32,9 @@ const Office = observer((props) => {
             />
             <div className="office-body">
                 <Chat />
-                <Rooms />
+                <div className="office-body-scrollable">
+                    <Rooms />
+                </div>
             </div>
         </div>
     )

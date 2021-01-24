@@ -24,6 +24,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #404145;
 }
 
 .navbar-user-avatar {
@@ -37,7 +38,8 @@
 }
 
 .navbar-sign-out {
-    border-left: 1px solid black;
+    border-left: 1px solid #e4e5e7;
     padding: 0px 10px;
     cursor: pointer;
+    color: #404145;
 }
