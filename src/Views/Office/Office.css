@@ -15,4 +15,6 @@
     display: flex;
     flex: 1;
     overflow: auto;
+    align-items: center;
+    justify-content: center;
 }

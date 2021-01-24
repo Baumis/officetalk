@@ -1,7 +1,7 @@
 import './Hallway.css'
-import { rootstore } from '../../../../../../index'
+import { rootstore } from '../../../../../index'
 import { observer } from 'mobx-react'
-import Avatar from '../../../Avatar/Avatar'
+import Avatar from '../../Avatar/Avatar'
 const Hallway = observer((props) => {
     const officeStore = rootstore.officeStore
 

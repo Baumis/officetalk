@@ -1,6 +1,15 @@
 .rooms {
-    flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+}
+
+.rooms-row {
+    display: flex;
+}
+
+.room-block-empty {
+    border-top: 4px solid #404145;
+    box-sizing: border-box;
+    width: 200px;
+    height: 300px;
 }
