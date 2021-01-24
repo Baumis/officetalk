@@ -40,7 +40,8 @@ class OfficeStore {
     }
 
     fetchOffice = async (id) => {
-        this.office = await Organization.getOrganization(id).office
+        const organization = await Organization.getOrganization(id)
+        this.office = organization.office
         return this.office
     }
 

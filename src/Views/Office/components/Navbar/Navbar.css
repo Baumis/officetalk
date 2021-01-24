@@ -6,3 +6,38 @@
     height: 70px;
     background: white;
 }
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-office-name {
+    margin: 0px 10px;
+}
+
+.navbar-logo-image {
+    height: 40px;
+}
+
+.navbar-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-user-avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-image:url('https://pbs.twimg.com/profile_images/988775660163252226/XpgonN0X.jpg');
+    background-size: cover;
+    background-position:center center;
+    margin: 0px 10px;
+}
+
+.navbar-sign-out {
+    border-left: 1px solid black;
+    padding: 0px 10px;
+    cursor: pointer;
+}

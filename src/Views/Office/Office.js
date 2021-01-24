@@ -21,8 +21,6 @@ const Office = observer(() => {
         fetchOrganization()
     },[officeStore, userStore])
 
-    console.log(loading)
-
     if (!officeStore.office) {
         return <Loading />
     }
