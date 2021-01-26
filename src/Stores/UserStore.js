@@ -13,6 +13,7 @@ class UserStore {
 
     signIn = async (username, password) => {
         this.user = await signIn.signInEmployee({ username, password })
+        console.log(this.user)
         return this.user
     }
 
