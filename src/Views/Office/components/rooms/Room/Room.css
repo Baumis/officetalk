@@ -27,7 +27,6 @@
     display: flex;
     justify-content: center;
     color: black;
-    font-weight: 600;
     margin-top: -30px;
     margin-bottom: 9px;
 }
@@ -56,20 +55,4 @@
 .bottom-room .room-top {
     margin-bottom: -30px;
     margin-top: 9px;
-}
-
-.room-square {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid transparent;
-    min-width: 30px;
-    max-width: 31px;
-    min-height: 33px;
-    max-height: 35px;
-}
-
-.room-square:hover {
-    background: rgba(255,255,255, 0.2);
 }

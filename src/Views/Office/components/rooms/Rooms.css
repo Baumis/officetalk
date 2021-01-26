@@ -13,3 +13,8 @@
     width: 200px;
     height: 300px;
 }
+
+.user-layer {
+    position: absolute;
+    z-index: 2;
+}
