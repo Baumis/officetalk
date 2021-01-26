@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 import './Office.css';
-import { observer, PropTypes } from 'mobx-react'
+import { observer } from 'mobx-react'
 import Navbar from './components/Navbar/Navbar'
 import Chat from './components/Chat/Chat'
 import Rooms from './components/rooms/Rooms'
 import { rootstore } from '../../index'
-import Loading from './components/Loading/Loading';
+import Loading from './components/Loading/Loading'
+import CoWorkers from './components/CoWorkers/CoWorkers'
 
 const Office = observer((props) => {
     const officeStore = rootstore.officeStore
     const userStore = rootstore.userStore
+    const [showCoWorkers, setShowCoWorkers] = useState(false)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -36,6 +38,10 @@ const Office = observer((props) => {
                     <Rooms />
                 </div>
             </div>
+            <div className="office-toggle-coworkers" onClick={() => setShowCoWorkers(!showCoWorkers)}>
+                {`co-workers (${officeStore.organization.employees.length})`}
+            </div>
+            <CoWorkers show={showCoWorkers} close={() => setShowCoWorkers(false)}/>
         </div>
     )
 })

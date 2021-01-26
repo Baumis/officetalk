@@ -1,0 +1,38 @@
+.coworkers {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    right: 0;
+    top: 71px;
+    z-index: 5;
+    height: 100%;
+    width: 250px;
+    background: white;
+    transition: right 0.3s;
+}
+
+.coworkers-header {
+    display: flex;
+    margin: 0px 10px;
+    padding: 10px;
+    font-size: 20px;
+    color: #1CBF73;
+    justify-content: center;
+    border-bottom: 1px solid #e4e5e7;
+}
+
+.coworkers-header-back {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 15px;
+    left: 10px;
+    cursor: pointer;
+}
+
+.coworkers-names {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}

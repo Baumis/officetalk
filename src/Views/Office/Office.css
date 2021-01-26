@@ -18,3 +18,15 @@
     align-items: center;
     justify-content: center;
 }
+
+.office-toggle-coworkers {
+    position: fixed;
+    border: 1px solid #e4e5e7;
+    right: 20px;
+    top: 80px;
+    background: white;
+    padding: 10px;
+    color: #404145;
+    border-radius: 2px;
+    cursor: pointer;
+}

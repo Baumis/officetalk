@@ -4,6 +4,7 @@ import Organization from '../Services/Organization'
 class OfficeStore {
     rootStore
     office
+    organization
 
     users = [{
         id: 1,
@@ -36,7 +37,9 @@ class OfficeStore {
 
     fetchOffice = async (id) => {
         const organization = await Organization.getOrganization(id)
+        this.organization = organization
         this.office = organization.office
+        console.log(this.organization)
         return this.office
     }
 
