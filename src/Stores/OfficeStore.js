@@ -8,29 +8,16 @@ class OfficeStore {
     organization
 
     users = [{
-        id: 1,
+        id: "600fddd784a2d221e466a3f9",
         name: 'Axel Baumgartner',
         position: { room: -1, cordinates: { x: 5, y: 360 } },
         transitionTime: 2
     },
     {
         id: 3,
-        name: 'Peter Hilden',
+        name: "600fddd784a2d221e466a3f9",
         position: { room: -1, cordinates: { x: 5, y: 360 } },
         transitionTime: 2
-    }]
-
-    messages = [{
-        author: 'Peter Hilden',
-        content: 'Tää on tosi kiva toimisto.'
-    },
-    {
-        author: 'Esko Kaurismäki',
-        content: 'Eihän tää oo ees valmis :D'
-    },
-    {
-        author: 'Axel Baumgartner',
-        content: 'Moi Esko.'
     }]
 
     constructor(rootStore) {
