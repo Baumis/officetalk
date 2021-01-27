@@ -4,8 +4,8 @@ const Dots = (props) => {
     return (
         <div className="dots">
             <div className="snippet" data-title=".dot-hourglass">
-                <div className="stage filter-contrast">
-                    <div className="dot-hourglass"></div>
+                <div className="stage">
+                    <div className="dot-flashing"></div>
                 </div>
             </div>
         </div>

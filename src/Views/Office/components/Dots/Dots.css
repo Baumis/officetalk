@@ -6,73 +6,52 @@
     margin: 0px 3px;
 }
 
-.dot-hourglass {
+.dot-flashing {
     position: relative;
-    top: -15px;
     width: 10px;
     height: 10px;
-    border-radius: 6px;
+    border-radius: 5px;
     background-color: #1CBF73;
-    color: transparent;
-    margin: -1px 0;
-    transform-origin: 5px 20px;
-    animation: dotHourglass 2.4s infinite ease-in-out;
-    animation-delay: .6s;
+    color: #1CBF73;
+    animation: dotFlashing 1s infinite linear alternate;
+    animation-delay: .5s;
   }
   
-  .dot-hourglass::before, .dot-hourglass::after {
+  .dot-flashing::before, .dot-flashing::after {
     content: '';
     display: inline-block;
     position: absolute;
     top: 0;
-    left: 0;
+  }
+  
+  .dot-flashing::before {
+    left: -15px;
     width: 10px;
     height: 10px;
-    border-radius: 6px;
+    border-radius: 5px;
     background-color: #1CBF73;
-    color: transparent;
+    color: #1CBF73;
+    animation: dotFlashing 1s infinite alternate;
+    animation-delay: 0s;
   }
   
-  .dot-hourglass::before {
-    top: 30px;
+  .dot-flashing::after {
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #1CBF73;
+    color: #1CBF73;
+    animation: dotFlashing 1s infinite alternate;
+    animation-delay: 1s;
   }
   
-  .dot-hourglass::after {
-    animation: dotHourglassAfter 2.4s infinite cubic-bezier(0.65, 0.05, 0.36, 1);
-  }
-  
-  @keyframes dotHourglass {
+  @keyframes dotFlashing {
     0% {
-      transform: rotateZ(0deg);
+      background-color: #1CBF73;
     }
-    25% {
-      transform: rotateZ(180deg);
-    }
-    50% {
-      transform: rotateZ(180deg);
-    }
-    75% {
-      transform: rotateZ(360deg);
-    }
+    50%,
     100% {
-      transform: rotateZ(360deg);
-    }
-  }
-  
-  @keyframes dotHourglassAfter {
-    0% {
-      transform: translateY(0);
-    }
-    25% {
-      transform: translateY(30px);
-    }
-    50% {
-      transform: translateY(30px);
-    }
-    75% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(0);
+      background-color: #1cbf735b;
     }
   }

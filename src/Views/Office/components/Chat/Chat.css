@@ -33,6 +33,7 @@
 
 .chat-send {
     margin: 10px;
+    width: 30px;
     color: #404145;
     cursor: pointer;
 }
