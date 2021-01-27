@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 import Organization from '../Services/Organization'
+import Message from '../Services/Message'
 
 class OfficeStore {
     rootStore
@@ -9,12 +10,14 @@ class OfficeStore {
     users = [{
         id: 1,
         name: 'Axel Baumgartner',
-        position: { room: -1, cordinates: { x: 5, y: 360 } }
+        position: { room: -1, cordinates: { x: 5, y: 360 } },
+        transitionTime: 2
     },
     {
         id: 3,
         name: 'Peter Hilden',
-        position: { room: -1, cordinates: { x: 5, y: 360 } }
+        position: { room: -1, cordinates: { x: 5, y: 360 } },
+        transitionTime: 2
     }]
 
     messages = [{
@@ -43,13 +46,22 @@ class OfficeStore {
         return this.office
     }
 
-    sendMessage = (content) => {
-        this.messages.push({ author: 'Axel Baumgartner', content: content })
+    sendMessage = async (content) => {
+        const response = await Message.sendOfficeMessage({content: content})
+        if (response) {
+            let officeClone = JSON.parse(JSON.stringify(this.office))
+            officeClone.messages.push(response)
+            return response
+        } else {
+            return null
+        }
     }
 
-    changePosition = (id, position) => {
+    changePosition = (id, position, transitionTime) => {
+        console.log('store:', transitionTime)
         let usersClone = JSON.parse(JSON.stringify(this.users))
         usersClone.find(user => user.id === id).position = position
+        usersClone.find(user => user.id === id).transitionTime = transitionTime
         this.users = usersClone
     }
 }

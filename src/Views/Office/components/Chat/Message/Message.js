@@ -1,9 +1,12 @@
+import UserStore from '../../../../../Stores/UserStore';
 import './Message.css';
+import { rootstore } from '../../../../../index'
 
 function Message(props) {
+    const userStore = rootstore.userStore
 
     const myMessage = () => {
-        if(props.message.author === "Axel Baumgartner"){
+        if(props.message.author._id === userStore.user._id){
             return ' my-message'
         }
     }
@@ -12,7 +15,7 @@ function Message(props) {
         <div className={`message ${myMessage()}`}>
             <div className="message-buble">
                 <div className="message-author">
-                    {props.message.author}
+                    {props.message.author.name}
                 </div>
                 <div className="message-content">
                     {props.message.content}
