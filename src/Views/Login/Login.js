@@ -22,7 +22,8 @@ function Login(props) {
     const signIn = async () => {
         try {
             setLoading(true)
-            await userStore.signIn(username, password)
+            const response = await userStore.signIn(username, password)
+            props.connectSocket(response.token)
             props.navigateTo('office')
             setLoading(false)
 

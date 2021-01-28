@@ -12,14 +12,16 @@ class UserStore {
     }
 
     signIn = async (username, password) => {
-        this.user = await signIn.signInEmployee({ username, password })
+        const response = await signIn.signInEmployee({ username, password })
+        this.user = response.user
         console.log(this.user)
-        return this.user
+        return response
     }
 
     checkSignIn = async () => {
-        this.user = await signIn.signInWithToken()
-        return this.user
+        const response = await signIn.signInWithToken()
+        this.user = response.user
+        return response
     }
 
     signOut = async () => {
