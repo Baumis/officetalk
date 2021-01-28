@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react'
 import './Chat.css';
-import Message from './Message/Message';
+import Message from './Message/Message'
 import { rootstore } from '../../../../index'
-import Dots from '../Dots/Dots';
+import Dots from '../Dots/Dots'
 
 const Chat = observer((props) => {
     const [message, setMessage] = useState('')
@@ -23,7 +23,7 @@ const Chat = observer((props) => {
     return (
         <div className="chat block-shadow">
             <div className="chat-messages">
-                {officeStore.office.messages.map((message, key) =>
+                {rootstore.officeStore.office.messages.map((message, key) =>
                     <Message key={key} message={message} />
                 )}
             </div>

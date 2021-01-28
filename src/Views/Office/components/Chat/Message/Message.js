@@ -1,12 +1,12 @@
-import UserStore from '../../../../../Stores/UserStore';
-import './Message.css';
+import './Message.css'
+import { observer } from 'mobx-react'
 import { rootstore } from '../../../../../index'
 
-function Message(props) {
+const Message = observer((props) => {
     const userStore = rootstore.userStore
 
     const myMessage = () => {
-        if(props.message.author._id === userStore.user._id){
+        if (props.message.author._id === userStore.user._id) {
             return ' my-message'
         }
     }
@@ -22,7 +22,7 @@ function Message(props) {
                 </div>
             </div>
         </div>
-    );
-}
+    )
+})
 
 export default Message

@@ -34,24 +34,28 @@ class OfficeStore {
     }
 
     sendMessage = async (content) => {
-        const response = await Message.sendOfficeMessage({ content: content })
-        if (response) {
-            if (this.office.messages.find(msg => msg._id !== response._id)) {
-                let officeClone = JSON.parse(JSON.stringify(this.office))
-                officeClone.messages.push(response)
-                this.office = officeClone
+        try {
+            const response = await Message.sendOfficeMessage({ content: content })
+            if (response) {
+                if (!this.office.messages.find(msg => msg._id === response._id)) {
+                    let officeClone = JSON.parse(JSON.stringify(this.office))
+                    officeClone.messages.unshift(response)
+                    this.office = officeClone
+                }
+                return response
             }
-            return response
-        } else {
+        } catch {
             return null
         }
     }
 
     receiveMessage = (message) => {
-        if (this.office.messages.find(msg => msg._id !== message._id)) {
-            let officeClone = JSON.parse(JSON.stringify(this.office))
-            officeClone.messages.push(message)
+        console.log('before function', message)
+        if (!this.office.messages.find(msg => msg._id === message._id)) {
+            const officeClone = JSON.parse(JSON.stringify(this.office))
+            officeClone.messages.unshift(message)
             this.office = officeClone
+            console.log('after function', message)
         }
     }
 
