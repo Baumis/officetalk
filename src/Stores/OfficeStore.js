@@ -14,7 +14,7 @@ class OfficeStore {
         transitionTime: 2
     },
     {
-        id: 3,
+        id: "600fdd8584a2d221e466a3f8",
         name: "600fddd784a2d221e466a3f9",
         position: { room: -1, cordinates: { x: 5, y: 360 } },
         transitionTime: 2
@@ -34,12 +34,13 @@ class OfficeStore {
     }
 
     sendMessage = async (content) => {
-        const response = await Message.sendOfficeMessage({content: content})
+        const response = await Message.sendOfficeMessage({ content: content })
         if (response) {
-            let officeClone = JSON.parse(JSON.stringify(this.office))
-            officeClone.messages.push(response)
-            this.office = officeClone
-            console.log(response)
+            if (this.office.messages.find(msg => msg._id !== response._id)) {
+                let officeClone = JSON.parse(JSON.stringify(this.office))
+                officeClone.messages.push(response)
+                this.office = officeClone
+            }
             return response
         } else {
             return null
@@ -47,9 +48,11 @@ class OfficeStore {
     }
 
     receiveMessage = (message) => {
-        let officeClone = JSON.parse(JSON.stringify(this.office))
-        officeClone.messages.push(message)
-        this.office = officeClone
+        if (this.office.messages.find(msg => msg._id !== message._id)) {
+            let officeClone = JSON.parse(JSON.stringify(this.office))
+            officeClone.messages.push(message)
+            this.office = officeClone
+        }
     }
 
     changePosition = (id, position, transitionTime) => {

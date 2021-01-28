@@ -11,12 +11,15 @@ const Avatar = observer((props) => {
         return props.user.id === userStore.user._id
     }
 
+    console.log(user)
+
     return (
         <div className="avatar" style={{
             top: user.position.cordinates.y,
             left: user.position.cordinates.x,
             transition: `all ${user.transitionTime}s linear`,
-            border: `2px solid ${isMe(user) ? '#1CBF73' : 'black'}`
+            border: `2px solid ${isMe(user) ? '#1CBF73' : 'black'}`,
+            backgroundImage: `url(${officeStore.office.employees})`
         }}>
         </div>
     )
