@@ -38,10 +38,18 @@ class OfficeStore {
         if (response) {
             let officeClone = JSON.parse(JSON.stringify(this.office))
             officeClone.messages.push(response)
+            this.office = officeClone
+            console.log(response)
             return response
         } else {
             return null
         }
+    }
+
+    receiveMessage = (message) => {
+        let officeClone = JSON.parse(JSON.stringify(this.office))
+        officeClone.messages.push(message)
+        this.office = officeClone
     }
 
     changePosition = (id, position, transitionTime) => {
