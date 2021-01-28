@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import './Office.css';
 import { observer } from 'mobx-react'
+import { io } from "socket.io-client"
 import Navbar from './components/Navbar/Navbar'
 import Chat from './components/Chat/Chat'
 import Rooms from './components/rooms/Rooms'
@@ -14,12 +15,20 @@ const Office = observer((props) => {
     const [showCoWorkers, setShowCoWorkers] = useState(false)
     const [loading, setLoading] = useState(false)
 
+    const socket = useRef()
+
     useEffect(() => {
         const fetchOrganization = async () => {
             setLoading(true)
             await officeStore.fetchOffice(userStore.user.organization)
             setLoading(false)
         }
+        socket.current = io.connect('http://localhost:3001')
+
+        socket.current.on('message', (message) => {
+            officeStore.receiveMessage(message)
+        })
+
         fetchOrganization()
     }, [officeStore, userStore])
 
