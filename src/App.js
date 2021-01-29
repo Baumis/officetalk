@@ -16,14 +16,14 @@ function App() {
     const checkLogin = async () => {
       const response = await userStore.checkSignIn()
       response.user && setPage('office')
-      connectSocket(response.token)
+      connectSocket(response.token, response.user.organization)
     }
 
     checkLogin()
   }, [])
 
-  const connectSocket = (token) => {
-    socket.current = io.connect('http://localhost:3001', {
+  const connectSocket = (token, organization) => {
+    socket.current = io.connect(`/${organization}`, {
       auth: {
         token
       }
@@ -34,12 +34,16 @@ function App() {
     })
   }
 
+  const disconnectSocket = () => {
+    socket.current.disconnect()
+  }
+
   const renderPage = () => {
     switch (page) {
       case 'login':
         return <Login navigateTo={setPage} connectSocket={connectSocket} />
       case 'office':
-        return <Office navigateTo={setPage} />
+        return <Office navigateTo={setPage} disconnectSocket={disconnectSocket} />
       case 'createOffice':
         return <Login navigateTo={setPage} />
       case 'controlPanel':

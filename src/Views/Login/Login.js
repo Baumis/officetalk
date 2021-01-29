@@ -23,7 +23,7 @@ function Login(props) {
         try {
             setLoading(true)
             const response = await userStore.signIn(username, password)
-            props.connectSocket(response.token)
+            props.connectSocket(response.token, response.user.organization)
             props.navigateTo('office')
             setLoading(false)
 
