@@ -15,15 +15,15 @@ const Navbar = observer((props) => {
     return (
         <div className="navbar block-shadow">
             <div className="navbar-logo">
-                <img className="navbar-logo-image" src="https://cdn.arstechnica.net/wp-content/uploads/2012/08/microsoft-metro-tall.png">
-
+                <img className="navbar-logo-image" src={officeStore.organization.logo}>
                 </img>
                 <div className="navbar-office-name">
+                    {officeStore.organization.name}
                 </div>
             </div>
             <div className="navbar-user">
                 {userStore.user.name}
-                <div className="navbar-user-avatar">
+                <div className="navbar-user-avatar" style={{ backgroundImage: `url(${userStore.user.avatar})` }}>
                 </div>
                 <div className="navbar-sign-out" onClick={() => signOut()}>
                     Sign out

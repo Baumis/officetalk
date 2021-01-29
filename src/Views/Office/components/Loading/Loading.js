@@ -1,9 +1,11 @@
+import Dots from '../Dots/Dots';
 import './Loading.css';
 
 const Loading = (props) => {
     return (
         <div className="loading">
-            Loading office
+            <div className="loading-text">Loading Office</div>
+            <Dots />
         </div>
     )
 }

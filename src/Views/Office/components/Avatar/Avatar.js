@@ -11,7 +11,7 @@ const Avatar = observer((props) => {
         return props.user.id === userStore.user._id
     }
 
-    console.log(user)
+    console.log(officeStore.organization.employees.find(empl => empl._id === props.user.id).avatar)
 
     return (
         <div className="avatar" style={{
@@ -19,7 +19,7 @@ const Avatar = observer((props) => {
             left: user.position.cordinates.x,
             transition: `all ${user.transitionTime}s linear`,
             border: `2px solid ${isMe(user) ? '#1CBF73' : 'black'}`,
-            backgroundImage: `url(${officeStore.office.employees})`
+            backgroundImage: `url(${officeStore.organization.employees.find(empl => empl._id === props.user.id).avatar})`
         }}>
         </div>
     )

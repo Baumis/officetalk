@@ -1,11 +1,11 @@
-import { makeAutoObservable } from 'mobx'
+import { makeObservable, observable, action } from 'mobx'
 import Organization from '../Services/Organization'
 import Message from '../Services/Message'
 
 class OfficeStore {
-    rootStore
-    office
-    organization
+    rootStore = null
+    office = null
+    organization = null
 
     users = [{
         id: "600fddd784a2d221e466a3f9",
@@ -22,15 +22,24 @@ class OfficeStore {
 
     constructor(rootStore) {
         this.rootStore = rootStore
-        makeAutoObservable(this)
+        makeObservable(this, {
+            rootStore: observable,
+            office: observable,
+            organization: observable,
+            users: observable,
+            receiveMessage: action,
+            changePosition: action,
+            sendMessage: action,
+            fetchOffice: action
+        })
     }
 
     fetchOffice = async (id) => {
         const organization = await Organization.getOrganization(id)
         this.organization = organization
         this.office = organization.office
-        console.log(this.organization)
-        return this.office
+        console.log('current organization:', this.organization)
+        return organization
     }
 
     sendMessage = async (content) => {
@@ -50,12 +59,10 @@ class OfficeStore {
     }
 
     receiveMessage = (message) => {
-        console.log('before function', message)
         if (!this.office.messages.find(msg => msg._id === message._id)) {
             const officeClone = JSON.parse(JSON.stringify(this.office))
             officeClone.messages.unshift(message)
             this.office = officeClone
-            console.log('after function', message)
         }
     }
 

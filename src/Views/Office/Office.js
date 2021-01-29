@@ -1,6 +1,7 @@
-import { useEffect, useState, useRef } from 'react'
-import './Office.css';
+import { useEffect, useState } from 'react'
+import './Office.css'
 import { observer } from 'mobx-react'
+import { isObservable} from 'mobx'
 import Navbar from './components/Navbar/Navbar'
 import Chat from './components/Chat/Chat'
 import Rooms from './components/rooms/Rooms'
@@ -12,17 +13,16 @@ const Office = observer((props) => {
     const officeStore = rootstore.officeStore
     const userStore = rootstore.userStore
     const [showCoWorkers, setShowCoWorkers] = useState(false)
-    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         const fetchOrganization = async () => {
-            setLoading(true)
             await officeStore.fetchOffice(userStore.user.organization)
-            setLoading(false)
         }
 
         fetchOrganization()
     }, [officeStore, userStore])
+
+    console.log(isObservable(officeStore.office))
 
     if (!officeStore.office) {
         return <Loading />
