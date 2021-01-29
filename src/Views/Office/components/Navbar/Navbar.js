@@ -9,6 +9,7 @@ const Navbar = observer((props) => {
 
     const signOut = () => {
         userStore.signOut()
+        props.disconnectSocket()
         props.navigateTo('login')
     }
 

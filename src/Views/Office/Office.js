@@ -32,6 +32,7 @@ const Office = observer((props) => {
         <div className="office">
             <Navbar
                 navigateTo={props.navigateTo}
+                disconnectSocket={props.disconnectSocket}
             />
             <div className="office-body">
                 <Chat />
