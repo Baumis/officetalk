@@ -44,3 +44,46 @@
     cursor: pointer;
     color: #404145;
 }
+
+.navbar-room {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0px 10px;
+}
+
+.navbar-settings {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0px 10px;
+}
+
+.navbar-voice {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0px 10px;
+}
+
+.navbar-room-title {
+    font-size: 14px;
+    color: #7a7d85;
+}
+
+.navbar-room-name {
+    font-size: 18px;
+    color: #1CBF73;
+}
+
+.navbar-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-controls-border {
+    border-right: 1px solid #e4e5e7;
+    height: 40px;
+    margin: 0px 10px;
+}

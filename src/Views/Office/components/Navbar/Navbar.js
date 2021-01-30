@@ -13,6 +13,17 @@ const Navbar = observer((props) => {
         props.navigateTo('login')
     }
 
+    const getCurrentRoom = () => {
+        const user = officeStore.users.find(user => user.id === userStore.user._id)
+        const roomId = user.position.room
+
+        if (roomId === -1) {
+            return "Hallway"
+        } else {
+            return officeStore.office.rooms.find(room => room._id === roomId).name
+        }
+    }
+
     return (
         <div className="navbar block-shadow">
             <div className="navbar-logo">
@@ -21,6 +32,16 @@ const Navbar = observer((props) => {
                 <div className="navbar-office-name">
                     {officeStore.organization.name}
                 </div>
+            </div>
+            <div className="navbar-controls">
+                <div className="navbar-controls-border"></div>
+                <div className="navbar-room">
+                    <div className="navbar-room-title">current room</div>
+                    <div className="navbar-room-name">{getCurrentRoom()}</div>
+                </div>
+                <div className="navbar-voice">voice controls</div>
+                <div className="navbar-settings">settings</div>
+                <div className="navbar-controls-border"></div>
             </div>
             <div className="navbar-user">
                 {userStore.user.name}

@@ -10,7 +10,7 @@ const Avatar = observer((props) => {
         <div className="avatar" style={{
             top: props.user.position.cordinates.y,
             left: props.user.position.cordinates.x,
-            transition: `all ${props.user.transitionTime}s linear`,
+            transition: `all ${props.user.transitionTime}s ease-in-out`,
             border: `2px solid ${props.user.id === userStore.user._id ? '#1CBF73' : 'black'}`,
             backgroundImage: `url(${officeStore.organization.employees.find(empl => empl._id === props.user.id).avatar})`
         }}>

@@ -72,7 +72,7 @@ const Rooms = observer(() => {
         const travelX = Math.abs(oldX - newX)
         const travelY = Math.abs(oldY - newY)
         const TravelLength = Math.hypot(travelX,travelY)
-        return TravelLength * 0.008
+        return TravelLength * 0.01
     }
 
     return (
