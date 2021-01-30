@@ -33,6 +33,11 @@ const App = observer(() => {
     socket.current.on('message', (message) => {
       officeStore.receiveMessage(message)
     })
+
+    socket.current.on('employees', (users) => {
+      console.log(users)
+    })
+
   }
 
   const disconnectSocket = () => {
