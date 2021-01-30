@@ -4,6 +4,7 @@ import './Chat.css';
 import Message from './Message/Message'
 import { rootstore } from '../../../../index'
 import Dots from '../Dots/Dots'
+import { AiOutlineSend } from 'react-icons/ai'
 
 const Chat = observer((props) => {
     const [message, setMessage] = useState('')
@@ -37,7 +38,7 @@ const Chat = observer((props) => {
                     {sending ?
                         <Dots />
                         :
-                        'send'
+                        <AiOutlineSend />
                     }
                 </div>
             </div>
