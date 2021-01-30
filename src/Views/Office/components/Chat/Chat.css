@@ -1,6 +1,7 @@
 .chat {
     flex-grow: 1;
     flex: 1;
+    z-index: 10;
     display: flex;
     max-width: 350px;
     background: white;

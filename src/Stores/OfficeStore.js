@@ -67,7 +67,6 @@ class OfficeStore {
     }
 
     changePosition = (id, position, transitionTime) => {
-        console.log('store:', transitionTime)
         let usersClone = JSON.parse(JSON.stringify(this.users))
         usersClone.find(user => user.id === id).position = position
         usersClone.find(user => user.id === id).transitionTime = transitionTime

@@ -17,52 +17,54 @@ const Rooms = observer(() => {
 
         if (roomId !== user.position.room) {
             if (roomId === -1) {
-                roomToHall(user, rooms, event, roomId, userId)
+                roomToHall(userId, rooms, event, roomId, user)
             } else if (user.position.room === -1) {
                 hallToRoom(user, rooms, event, roomId, userId)
             } else {
-                roomToRoom(user, rooms, event, roomId, userId)
+                roomToRoom(rooms, event, roomId, user)
             }
         } else {
-            moveInsideRoom(event, roomId, userId, user)
+            moveInsideRoom(userId, event, roomId)
         }
     }
 
-    const roomToHall = async (user, rooms, event, roomId, userId) => {
-        const duration = moveToDoor(user, rooms, user.position.room)
+    const roomToHall = async (userId, rooms, event, roomId, user) => {
+        const duration = moveToDoor(userId, rooms, user.position.room)
         await delay(duration * 1000)
-        moveInsideRoom(event, roomId, userId, user)
+        moveInsideRoom(userId, event, roomId)
     }
 
-    const hallToRoom = async (user, rooms, event, roomId, userId) => {
-        const duration = moveToDoor(user, rooms, roomId)
+    const hallToRoom = async (user, rooms, event, roomId) => {
+        const duration = moveToDoor(user.id, rooms, roomId)
         await delay(duration * 1000)
-        moveInsideRoom(event, roomId, userId, user)
+        moveInsideRoom(user.id, event, roomId)
     }
 
-    const roomToRoom = async (user, rooms, event, roomId, userId) => {
-        const duration = moveToDoor(user, rooms, user.position.room)
+    const roomToRoom = async (rooms, event, roomId, user) => {
+        const duration = moveToDoor(user.id, rooms, user.position.room)
         await delay(duration * 1000)
-        const duration2 = moveToDoor(user, rooms, roomId)
+        const duration2 = moveToDoor(user.id, rooms, roomId)
         await delay(duration2 * 1000)
-        moveInsideRoom(event, roomId, userId, user)
+        moveInsideRoom(user.id, event, roomId)
     }
 
-    const moveInsideRoom = (event, roomId, userId, user) => {
+    const moveInsideRoom = (userId, event, roomId) => {
+        const user = officeStore.users.find(user => user.id === userId)
         const rooms = document.getElementById('rooms')
         const positionX = event.clientX - rooms.offsetLeft
         const positionY = event.clientY - rooms.offsetTop
         const transitionTime = calcTravelTime(user.position.cordinates.x, user.position.cordinates.y, positionX, positionY)
-        officeStore.changePosition(userId, { room: roomId, cordinates: { x: positionX, y: positionY } }, transitionTime)
+        officeStore.changePosition(userId, { room: roomId , cordinates: { x: positionX, y: positionY } }, transitionTime)
         return transitionTime
     }
 
-    const moveToDoor = (user, rooms, targetRoom) => {
+    const moveToDoor = (userId, rooms, targetRoom) => {
+        const user = officeStore.users.find(user => user.id === userId)
         const doorElement = document.getElementById(`door${targetRoom}`)
         const doorX = doorElement.offsetLeft - rooms.offsetLeft + 30
         const doorY = doorElement.offsetTop - rooms.offsetTop
         const transitionTime = calcTravelTime(user.position.cordinates.x, user.position.cordinates.y, doorX, doorY)
-        officeStore.changePosition(user.id, { room: user.position.room, cordinates: { x: doorX, y: doorY } }, transitionTime)
+        officeStore.changePosition(userId, { room: user.position.room, cordinates: { x: doorX, y: doorY } }, transitionTime)
         return transitionTime
     }
 
@@ -70,7 +72,6 @@ const Rooms = observer(() => {
         const travelX = Math.abs(oldX - newX)
         const travelY = Math.abs(oldY - newY)
         const TravelLength = Math.hypot(travelX,travelY)
-        console.log('calc:',TravelLength)
         return TravelLength * 0.008
     }
 
