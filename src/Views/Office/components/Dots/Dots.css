@@ -17,6 +17,13 @@
     animation-delay: .5s;
   }
   
+.white .dot-flashing {
+    background-color: white;
+    color: white;
+    animation: whiteDotFlashing 1s infinite linear alternate;
+    animation-delay: .5s;
+  }
+
   .dot-flashing::before, .dot-flashing::after {
     content: '';
     display: inline-block;
@@ -45,6 +52,20 @@
     animation: dotFlashing 1s infinite alternate;
     animation-delay: 1s;
   }
+
+  .white .dot-flashing::before {
+    background-color: white;
+    color: white;
+    animation: whiteDotFlashing 1s infinite alternate;
+    animation-delay: 0s;
+  }
+  
+  .white .dot-flashing::after {
+    background-color: white;
+    color: white;
+    animation: whiteDotFlashing 1s infinite alternate;
+    animation-delay: 1s;
+  }
   
   @keyframes dotFlashing {
     0% {
@@ -53,5 +74,15 @@
     50%,
     100% {
       background-color: #1cbf735b;
+    }
+  }
+
+  @keyframes whiteDotFlashing {
+    0% {
+      background-color: white;
+    }
+    50%,
+    100% {
+      background-color: rgba(255,255,255, 0.5);
     }
   }

@@ -1,7 +1,7 @@
 import './Navbar.css'
 import { observer } from 'mobx-react'
 import { rootstore } from '../../../../index'
-
+import { FiSettings, FiMic, FiVolume2 } from 'react-icons/fi'
 
 const Navbar = observer((props) => {
     const userStore = rootstore.userStore
@@ -36,11 +36,20 @@ const Navbar = observer((props) => {
             <div className="navbar-controls">
                 <div className="navbar-controls-border"></div>
                 <div className="navbar-room">
-                    <div className="navbar-room-title">current room</div>
                     <div className="navbar-room-name">{getCurrentRoom()}</div>
+                    <div className="navbar-room-title">current room</div>
                 </div>
-                <div className="navbar-voice">voice controls</div>
-                <div className="navbar-settings">settings</div>
+                <div className="navbar-voice">
+                    <div className="navbar-voice-icons">
+                        <FiMic size={22} className="navbar-voice-microphone" color={'#1CBF73'}/>
+                        <FiVolume2 size={22} className="navbar-voice-volume" color={'#1CBF73'}/>
+                    </div>
+                    <div className="navbar-room-title">audio controls</div>
+                </div>
+                <div className="navbar-settings">
+                    <FiSettings size={22} className="navbar-settings-cog" color={'#404145'}/>
+                    <div className="navbar-room-title">settings</div>
+                </div>
                 <div className="navbar-controls-border"></div>
             </div>
             <div className="navbar-user">

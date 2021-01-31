@@ -29,7 +29,9 @@
 }
 
 .login-card-tab {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex: 1;
     padding: 0px 0px 15px 0px;
     margin-bottom: -1px;

@@ -8,6 +8,7 @@ import Rooms from './components/rooms/Rooms'
 import { rootstore } from '../../index'
 import Loading from './components/Loading/Loading'
 import CoWorkers from './components/CoWorkers/CoWorkers'
+import { FiUsers } from 'react-icons/fi'
 
 const Office = observer((props) => {
     const officeStore = rootstore.officeStore
@@ -39,7 +40,8 @@ const Office = observer((props) => {
                 </div>
             </div>
             <div className="office-toggle-coworkers" onClick={() => setShowCoWorkers(!showCoWorkers)}>
-                {`co-workers (${officeStore.organization.employees.length})`}
+                <FiUsers style={{marginRight: '3px'}} size={18}/>
+                {`Co-workers (${officeStore.organization.employees.length})`}
             </div>
             <CoWorkers show={showCoWorkers} close={() => setShowCoWorkers(false)}/>
         </div>

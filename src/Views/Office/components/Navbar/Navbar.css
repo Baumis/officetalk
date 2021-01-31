@@ -48,22 +48,24 @@
 .navbar-room {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
-    margin: 0px 10px;
+    margin: 0px 15px;
 }
 
 .navbar-settings {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
-    margin: 0px 10px;
+    margin: 0px 15px;
 }
 
 .navbar-voice {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin: 0px 10px;
+    margin: 0px 15px;
 }
 
 .navbar-room-title {
@@ -73,7 +75,25 @@
 
 .navbar-room-name {
     font-size: 18px;
-    color: #1CBF73;
+    color: #404145;
+}
+
+.navbar-voice-icons {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+}
+
+.navbar-voice-microphone {
+    cursor: pointer;
+}
+
+.navbar-voice-volume {
+    cursor: pointer;
+}
+
+.navbar-settings-cog {
+    cursor: pointer;
 }
 
 .navbar-controls {
@@ -85,5 +105,5 @@
 .navbar-controls-border {
     border-right: 1px solid #e4e5e7;
     height: 30px;
-    margin: 0px 10px;
+    margin: 0px 15px;
 }

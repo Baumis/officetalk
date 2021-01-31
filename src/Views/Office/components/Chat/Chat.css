@@ -9,6 +9,26 @@
     flex-direction: column;
 }
 
+.chat-tabs {
+    display: flex;
+    height: 50px;
+}
+
+.chat-tab {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #7a7d85;
+    background: #e4e5e7;
+    cursor: pointer;
+}
+
+.chat-tab-active {
+    color: #1CBF73;
+    background: white;
+}
+
 .chat-messages {
     flex: 1;
     display: flex;
@@ -23,13 +43,19 @@
     padding: 10px;
 }
 
+.chat-input-container {
+    display: flex;
+    flex: 1;
+    background: #e4e5e7;
+    border-radius: 8px;
+}
+
 .chat-controls input {
     flex: 1;
     padding: 15px;
-    background: #e4e5e7;
     border: none;
     font-size: 15px;
-    border-radius: 8px;
+    background: transparent;
 }
 
 .chat-send {
@@ -37,7 +63,6 @@
     align-items: center;
     justify-content: center;
     margin: 0px 10px;
-    font-size: 30px;
     width: 30px;
     color: #1CBF73;
     cursor: pointer;

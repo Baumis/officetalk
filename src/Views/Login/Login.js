@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './Login.css';
 import { rootstore } from '../../index'
+import Dots from '../Office/components/Dots/Dots'
+import { AiOutlineUser, AiOutlineShop } from 'react-icons/ai'
 
 function Login(props) {
     const userStore = rootstore.userStore
@@ -10,7 +12,7 @@ function Login(props) {
     const [loginType, setLoginType] = useState('user')
 
     const isActive = (tab) => {
-        if (tab === 'user' && loginType === 'user'){
+        if (tab === 'user' && loginType === 'user') {
             return 'user-active'
         }
         if (tab === 'organization' && loginType === 'organization') {
@@ -20,6 +22,11 @@ function Login(props) {
     }
 
     const signIn = async () => {
+        if (username === '' || password === '') {
+            alert('username and password required')
+            return
+        }
+
         try {
             setLoading(true)
             const response = await userStore.signIn(username, password)
@@ -30,6 +37,7 @@ function Login(props) {
         } catch (error) {
             setLoading(false)
             setPassword('')
+            alert('could not signin')
             console.log(error)
         }
     }
@@ -42,10 +50,12 @@ function Login(props) {
             <div className="login-card block-shadow">
                 <div className="login-card-tabs">
                     <div className={`login-card-tab ${isActive('user')}`} onClick={() => setLoginType('user')}>
-                        User
+                        <AiOutlineUser size={20} />
+                        <div className="login-tab-text">User</div>
                     </div>
                     <div className={`login-card-tab ${isActive('organization')}`} onClick={() => setLoginType('organization')}>
-                        Organization
+                        <AiOutlineShop size={20} />
+                        <div className="login-tab-text">Organization</div>
                     </div>
                 </div>
                 <div className="login-input-row">
@@ -68,8 +78,12 @@ function Login(props) {
                     />
                 </div>
                 <div className="login-input-row">
-                    <div className="OTButton" style={{background: loginType === 'organization' && '#F74040'}} onClick={() => signIn()}>
-                        Sign in
+                    <div className="OTButton" style={{ background: loginType === 'organization' && '#F74040' }} onClick={() => signIn()}>
+                        {loading ?
+                            <Dots white />
+                            :
+                            `Sign in`
+                        }
                     </div>
                 </div>
             </div>
