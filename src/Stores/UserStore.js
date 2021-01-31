@@ -13,7 +13,8 @@ class UserStore {
             user: observable,
             signIn: action,
             checkSignIn: action,
-            signOut: action
+            signOut: action,
+            updateUser: action
         })
     }
 
@@ -33,6 +34,10 @@ class UserStore {
     signOut = async () => {
         await SignIn.SignOut()
         this.user = null
+    }
+
+    updateUser = async (userValues) => {
+        return userValues
     }
 
 }

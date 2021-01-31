@@ -59,13 +59,16 @@
     align-items: center;
     flex-direction: column;
     margin: 0px 15px;
+    cursor: pointer;
 }
 
 .navbar-voice {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     margin: 0px 15px;
+    cursor: pointer;
 }
 
 .navbar-room-title {
@@ -76,12 +79,6 @@
 .navbar-room-name {
     font-size: 18px;
     color: #404145;
-}
-
-.navbar-voice-icons {
-    display: flex;
-    flex: 1;
-    justify-content: space-around;
 }
 
 .navbar-voice-microphone {

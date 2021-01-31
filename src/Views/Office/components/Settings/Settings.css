@@ -23,3 +23,69 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.settings-content {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-content-row {
+    display: flex;
+    align-items: center;
+    margin: 10px 20px;
+}
+
+.settings-input-row {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-input-label {
+    margin: 4px 5px;
+    color: #1CBF73;
+}
+
+.settings-input-row input{
+    flex: 1;
+    border: 1px solid #e4e5e7;
+    padding: 10px 10px;
+    border-radius: 8px;
+}
+
+.settings-avatar {
+    width: 75px;
+    height: 75px;
+    background: #404145;
+    border-radius: 50%;
+    background-size: cover;
+    background-position:center center;
+    border: 1px solid #404145;
+    margin-right: 20px;
+}
+
+.settings-bottom-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.settings-save-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 8px;
+    height: 39px;
+    width: 100px;
+    background: #e4e5e7;
+    transition: background 0.4s;
+}
+
+.unsaved-changes {
+    background: #1CBF73;
+    cursor: pointer;
+}

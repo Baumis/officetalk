@@ -1,11 +1,27 @@
 import './Navbar.css'
+import { useState } from 'react'
 import { observer } from 'mobx-react'
 import { rootstore } from '../../../../index'
-import { FiSettings, FiMic, FiVolume2 } from 'react-icons/fi'
+import { FiSettings, FiMic, FiVolume2, FiMicOff, FiVolumeX } from 'react-icons/fi'
 
 const Navbar = observer((props) => {
     const userStore = rootstore.userStore
     const officeStore = rootstore.officeStore
+    const [mic, setMic] = useState(true)
+    const [volume, setVolume] = useState(true)
+
+    const toggleMic = () => {
+        setMic(!mic)
+    }
+
+    const toggleVolume = () => {
+        if (volume) {
+            setVolume(false)
+            setMic(false)
+        } else {
+            setVolume(true)
+        }
+    }
 
     const signOut = () => {
         userStore.signOut()
@@ -39,15 +55,24 @@ const Navbar = observer((props) => {
                     <div className="navbar-room-name">{getCurrentRoom()}</div>
                     <div className="navbar-room-title">current room</div>
                 </div>
-                <div className="navbar-voice">
-                    <div className="navbar-voice-icons">
-                        <FiMic size={22} className="navbar-voice-microphone" color={'#1CBF73'}/>
-                        <FiVolume2 size={22} className="navbar-voice-volume" color={'#1CBF73'}/>
-                    </div>
-                    <div className="navbar-room-title">audio controls</div>
+                <div className="navbar-voice" onClick={() => toggleMic()} >
+                    {mic ?
+                        <FiMic size={22} className="navbar-voice-microphone" color={'#1CBF73'} />
+                        :
+                        <FiMicOff size={22} className="navbar-voice-microphone" color={'#F74040'} />
+                    }
+                    <div className="navbar-room-title">microphone</div>
                 </div>
-                <div className="navbar-settings">
-                    <FiSettings size={22} className="navbar-settings-cog" color={'#404145'} onClick={() => props.setShowSettings(true)}/>
+                <div className="navbar-voice" onClick={() => toggleVolume()}>
+                    {volume ?
+                        <FiVolume2 size={22} className="navbar-voice-volume" color={'#1CBF73'} />
+                        :
+                        <FiVolumeX size={22} className="navbar-voice-volume" color={'#F74040'} />
+                    }
+                    <div className="navbar-room-title">volume</div>
+                </div>
+                <div className="navbar-settings" onClick={() => props.setShowSettings(true)}>
+                    <FiSettings size={22} className="navbar-settings-cog" color={'#404145'} />
                     <div className="navbar-room-title">settings</div>
                 </div>
                 <div className="navbar-controls-border"></div>
