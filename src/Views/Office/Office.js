@@ -8,12 +8,14 @@ import Rooms from './components/rooms/Rooms'
 import { rootstore } from '../../index'
 import Loading from './components/Loading/Loading'
 import CoWorkers from './components/CoWorkers/CoWorkers'
+import Settings from './components/Settings/Settings'
 import { FiUsers } from 'react-icons/fi'
 
 const Office = observer((props) => {
     const officeStore = rootstore.officeStore
     const userStore = rootstore.userStore
     const [showCoWorkers, setShowCoWorkers] = useState(false)
+    const [showSettings, setShowSettings] = useState(false)
 
     useEffect(() => {
         const fetchOrganization = async () => {
@@ -32,6 +34,7 @@ const Office = observer((props) => {
             <Navbar
                 navigateTo={props.navigateTo}
                 disconnectSocket={props.disconnectSocket}
+                setShowSettings={setShowSettings}
             />
             <div className="office-body">
                 <Chat />
@@ -44,6 +47,7 @@ const Office = observer((props) => {
                 {`Co-workers (${officeStore.organization.employees.length})`}
             </div>
             <CoWorkers show={showCoWorkers} close={() => setShowCoWorkers(false)}/>
+            {showSettings && <Settings setShowSettings={setShowSettings} />}
         </div>
     )
 })

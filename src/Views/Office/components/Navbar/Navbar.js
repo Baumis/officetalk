@@ -47,7 +47,7 @@ const Navbar = observer((props) => {
                     <div className="navbar-room-title">audio controls</div>
                 </div>
                 <div className="navbar-settings">
-                    <FiSettings size={22} className="navbar-settings-cog" color={'#404145'}/>
+                    <FiSettings size={22} className="navbar-settings-cog" color={'#404145'} onClick={() => props.setShowSettings(true)}/>
                     <div className="navbar-room-title">settings</div>
                 </div>
                 <div className="navbar-controls-border"></div>
