@@ -1,6 +1,7 @@
 .hallway {
     display: flex;
     height: 120px;
+    min-height: 120px;
     background: #e4e5e7;
     background-image:url('../../../../../Assets/Carpet.jpg');
     box-sizing: border-box;

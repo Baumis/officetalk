@@ -47,6 +47,7 @@
     display: flex;
     flex: 1;
     background: #e4e5e7;
+    border: 1px solid #d6d8db;
     border-radius: 8px;
 }
 

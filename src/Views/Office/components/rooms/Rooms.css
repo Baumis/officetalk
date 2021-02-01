@@ -1,6 +1,7 @@
 .rooms {
     display: flex;
     flex-direction: column;
+    margin: auto;
 }
 
 .rooms-row {
