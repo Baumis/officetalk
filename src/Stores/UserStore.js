@@ -1,6 +1,7 @@
 import { makeObservable, observable, action } from 'mobx'
+import Employee from '../Services/Employee'
 import SignIn from '../Services/SignIn'
-import signIn from '../Services/SignIn'
+
 
 class UserStore {
     rootStore = null
@@ -19,14 +20,14 @@ class UserStore {
     }
 
     signIn = async (username, password) => {
-        const response = await signIn.signInEmployee({ username, password })
+        const response = await SignIn.signInEmployee({ username, password })
         this.user = response.user
         console.log('current user:', this.user)
         return response
     }
 
     checkSignIn = async () => {
-        const response = await signIn.signInWithToken()
+        const response = await SignIn.signInWithToken()
         this.user = response.user
         return response
     }
@@ -37,9 +38,14 @@ class UserStore {
     }
 
     updateUser = async (userValues) => {
-        return userValues
+        try {
+            const response = await Employee.updateEmployee(userValues)
+            this.user = response
+            return response
+        } catch {
+            return null
+        }
     }
-
 }
 
 export default UserStore;

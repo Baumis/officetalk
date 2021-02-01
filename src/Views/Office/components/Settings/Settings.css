@@ -82,7 +82,7 @@
     height: 39px;
     width: 100px;
     background: #e4e5e7;
-    transition: background 0.4s;
+    transition: background 0.1s;
 }
 
 .unsaved-changes {
