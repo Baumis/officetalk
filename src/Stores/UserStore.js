@@ -6,16 +6,22 @@ import SignIn from '../Services/SignIn'
 class UserStore {
     rootStore = null
     user = null
+    muted = false
+    silenced = false
 
     constructor(rootStore) {
         this.rootStore = rootStore
         makeObservable(this, {
             rootStore: observable,
             user: observable,
+            muted: observable,
+            silenced: observable,
             signIn: action,
             checkSignIn: action,
             signOut: action,
-            updateUser: action
+            updateUser: action,
+            setMuted: action,
+            setSilenced: action
         })
     }
 
@@ -45,6 +51,14 @@ class UserStore {
         } catch {
             return null
         }
+    }
+
+    setMuted = (value) => {
+        this.muted = value
+    }
+
+    setSilenced = (value) => {
+        this.silenced = value
     }
 }
 

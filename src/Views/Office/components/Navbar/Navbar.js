@@ -1,5 +1,4 @@
 import './Navbar.css'
-import { useState } from 'react'
 import { observer } from 'mobx-react'
 import { rootstore } from '../../../../index'
 import { FiSettings, FiMic, FiVolume2, FiMicOff, FiVolumeX } from 'react-icons/fi'
@@ -7,19 +6,17 @@ import { FiSettings, FiMic, FiVolume2, FiMicOff, FiVolumeX } from 'react-icons/f
 const Navbar = observer((props) => {
     const userStore = rootstore.userStore
     const officeStore = rootstore.officeStore
-    const [mic, setMic] = useState(true)
-    const [volume, setVolume] = useState(true)
 
     const toggleMic = () => {
-        setMic(!mic)
+        userStore.setMuted(!userStore.muted)
     }
 
     const toggleVolume = () => {
-        if (volume) {
-            setVolume(false)
-            setMic(false)
+        if (!userStore.silenced) {
+            userStore.setSilenced(true)
+            userStore.setMuted(true)
         } else {
-            setVolume(true)
+            userStore.setSilenced(false)
         }
     }
 
@@ -56,7 +53,7 @@ const Navbar = observer((props) => {
                     <div className="navbar-room-title">current room</div>
                 </div>
                 <div className="navbar-voice" onClick={() => toggleMic()} >
-                    {mic ?
+                    {!userStore.muted ?
                         <FiMic size={22} className="navbar-voice-microphone" color={'#1CBF73'} />
                         :
                         <FiMicOff size={22} className="navbar-voice-microphone" color={'#F74040'} />
@@ -64,7 +61,7 @@ const Navbar = observer((props) => {
                     <div className="navbar-room-title">microphone</div>
                 </div>
                 <div className="navbar-voice" onClick={() => toggleVolume()}>
-                    {volume ?
+                    {!userStore.silenced ?
                         <FiVolume2 size={22} className="navbar-voice-volume" color={'#1CBF73'} />
                         :
                         <FiVolumeX size={22} className="navbar-voice-volume" color={'#F74040'} />
@@ -89,4 +86,4 @@ const Navbar = observer((props) => {
     )
 })
 
-export default Navbar;
+export default Navbar
