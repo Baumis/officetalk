@@ -27,7 +27,10 @@ const Navbar = observer((props) => {
     }
 
     const getCurrentRoom = () => {
-        const user = officeStore.users.find(user => user.id === userStore.user._id)
+        const user = officeStore.users.find(user => user.userId === userStore.user._id)
+        if(!user){
+            return 'loading...'
+        }
         const roomId = user.position.room
 
         if (roomId === -1) {

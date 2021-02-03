@@ -13,7 +13,7 @@ const Rooms = observer(() => {
 
     const move = (event, roomId, userId) => {
         const rooms = document.getElementById('rooms')
-        const user = officeStore.users.find(user => user.id === userId)
+        const user = officeStore.users.find(user => user.userId === userId)
 
         if (roomId !== user.position.room) {
             if (roomId === -1) {
@@ -35,39 +35,39 @@ const Rooms = observer(() => {
     }
 
     const hallToRoom = async (user, rooms, event, roomId) => {
-        const duration = moveToDoor(user.id, rooms, roomId)
+        const duration = moveToDoor(user.userId, rooms, roomId)
         await delay(duration * 1000)
-        moveInsideRoom(user.id, event, roomId)
+        moveInsideRoom(user.userId, event, roomId)
     }
 
     const roomToRoom = async (rooms, event, roomId, user) => {
-        const duration = moveToDoor(user.id, rooms, user.position.room)
+        const duration = moveToDoor(user.userId, rooms, user.position.room)
         await delay(duration * 1000)
-        const duration2 = moveToDoor(user.id, rooms, roomId)
+        const duration2 = moveToDoor(user.userId, rooms, roomId)
         await delay(duration2 * 1000)
-        moveInsideRoom(user.id, event, roomId)
+        moveInsideRoom(user.userId, event, roomId)
     }
 
     const moveInsideRoom = (userId, event, roomId) => {
-        const user = officeStore.users.find(user => user.id === userId)
+        const user = officeStore.users.find(user => user.userId  === userId)
         const rooms = document.getElementById('rooms')
         const positionX = event.clientX - rooms.offsetLeft
         const positionY = event.clientY - rooms.offsetTop
-        const transitionTime = calcTravelTime(user.position.cordinates.x, user.position.cordinates.y, positionX, positionY)
-        officeStore.changePosition(userId, { room: roomId , cordinates: { x: positionX, y: positionY } }, transitionTime)
+        const transitionTime = calcTravelTime(user.position.coordinates.x, user.position.coordinates.y, positionX, positionY)
+        officeStore.changePosition(userId, { room: roomId , coordinates: { x: positionX, y: positionY } }, transitionTime)
         return transitionTime
     }
 
     const moveToDoor = (userId, rooms, targetRoom) => {
-        const user = officeStore.users.find(user => user.id === userId)
+        const user = officeStore.users.find(user => user.userId  === userId)
         const doorElement = document.getElementById(`door${targetRoom}`)
 
         //const doorX = doorElement.offsetLeft - rooms.offsetLeft + 30
         const doorX = doorElement.offsetLeft + 30
         //const doorY = doorElement.offsetTop - rooms.offsetTop
         const doorY = doorElement.offsetTop
-        const transitionTime = calcTravelTime(user.position.cordinates.x, user.position.cordinates.y, doorX, doorY)
-        officeStore.changePosition(userId, { room: user.position.room, cordinates: { x: doorX, y: doorY } }, transitionTime)
+        const transitionTime = calcTravelTime(user.position.coordinates.x, user.position.coordinates.y, doorX, doorY)
+        officeStore.changePosition(userId, { room: user.position.room, coordinates: { x: doorX, y: doorY } }, transitionTime)
         return transitionTime
     }
 
@@ -113,7 +113,7 @@ const Rooms = observer(() => {
                 }
             </div>
             <div className="user-layer">
-                {officeStore.users.map(user => <Avatar key={user.id} user={user} />)}
+                {officeStore.users.map(user => <Avatar key={user._id} user={user} />)}
             </div>
         </div>
     )

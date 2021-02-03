@@ -34,8 +34,8 @@ const App = observer(() => {
       officeStore.receiveMessage(message)
     })
 
-    socket.current.on('employees', (users) => {
-      console.log(users)
+    socket.current.on('employees', (employees) => {
+      officeStore.setEmployeeStates(employees)
     })
 
   }

@@ -10,13 +10,13 @@ class OfficeStore {
     users = [{
         id: "600fddd784a2d221e466a3f9",
         name: 'Axel Baumgartner',
-        position: { room: -1, cordinates: { x: 5, y: 360 } },
+        position: { room: -1, coordinates: { x: 5, y: 360 } },
         transitionTime: 2
     },
     {
         id: "600fdd8584a2d221e466a3f8",
         name: "600fddd784a2d221e466a3f9",
-        position: { room: -1, cordinates: { x: 5, y: 360 } },
+        position: { room: -1, coordinates: { x: 5, y: 360 } },
         transitionTime: 2
     }]
 
@@ -30,7 +30,8 @@ class OfficeStore {
             receiveMessage: action,
             changePosition: action,
             sendMessage: action,
-            fetchOffice: action
+            fetchOffice: action,
+            setEmployeeStates: action
         })
     }
 
@@ -40,6 +41,11 @@ class OfficeStore {
         this.office = organization.office
         console.log('current organization:', this.organization)
         return organization
+    }
+
+    setEmployeeStates = (employees) => {
+        console.log(employees)
+        this.users = employees
     }
 
     sendMessage = async (content) => {
@@ -68,8 +74,8 @@ class OfficeStore {
 
     changePosition = (id, position, transitionTime) => {
         let usersClone = JSON.parse(JSON.stringify(this.users))
-        usersClone.find(user => user.id === id).position = position
-        usersClone.find(user => user.id === id).transitionTime = transitionTime
+        usersClone.find(user => user.userId === id).position = position
+        usersClone.find(user => user.userId === id).transitionTime = transitionTime
         this.users = usersClone
     }
 }
