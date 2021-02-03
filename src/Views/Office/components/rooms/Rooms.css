@@ -1,5 +1,6 @@
 .rooms {
     display: flex;
+    position: relative;
     flex-direction: column;
     margin: auto;
 }
@@ -18,4 +19,6 @@
 .user-layer {
     position: absolute;
     z-index: 2;
+    height: 0px;
+    width: 0px;
 }

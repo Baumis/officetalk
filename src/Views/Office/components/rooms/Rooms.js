@@ -61,8 +61,11 @@ const Rooms = observer(() => {
     const moveToDoor = (userId, rooms, targetRoom) => {
         const user = officeStore.users.find(user => user.id === userId)
         const doorElement = document.getElementById(`door${targetRoom}`)
-        const doorX = doorElement.offsetLeft - rooms.offsetLeft + 30
-        const doorY = doorElement.offsetTop - rooms.offsetTop
+
+        //const doorX = doorElement.offsetLeft - rooms.offsetLeft + 30
+        const doorX = doorElement.offsetLeft + 30
+        //const doorY = doorElement.offsetTop - rooms.offsetTop
+        const doorY = doorElement.offsetTop
         const transitionTime = calcTravelTime(user.position.cordinates.x, user.position.cordinates.y, doorX, doorY)
         officeStore.changePosition(userId, { room: user.position.room, cordinates: { x: doorX, y: doorY } }, transitionTime)
         return transitionTime
