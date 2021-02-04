@@ -2,48 +2,47 @@ import { rootstore } from '../index'
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-const move = async (event, roomId, userId) => {
+const move = async (X, Y, roomId, userId) => {
     const user = rootstore.officeStore.users.find(user => user.userId === userId)
-
+    console.log(roomId, user.position.room)
     if (roomId !== user.position.room) {
         if (roomId === -1) {
-            await roomToHall(user, event, roomId, userId)
+            await roomToHall(user, X, Y, roomId, userId)
         } else if (user.position.room === -1) {
-            await hallToRoom(user, event, roomId, userId)
+            await hallToRoom(user, X, Y, roomId, userId)
         } else {
-            await roomToRoom(user, event, roomId)
+            await roomToRoom(user, X, Y, roomId)
         }
     } else {
-        await moveInsideRoom(userId, event, roomId)
+        await moveInsideRoom(userId, X, Y, roomId)
     }
 }
 
-const roomToHall = async (user, event, roomId, userId) => {
+const roomToHall = async (user, X, Y, roomId, userId) => {
     const duration = moveToDoor(userId, user.position.room)
     await delay(duration * 1000)
-    moveInsideRoom(userId, event, roomId)
+    moveInsideRoom(userId, X, Y, roomId)
 }
 
-const hallToRoom = async (user, event, roomId) => {
+const hallToRoom = async (user, X, Y, roomId) => {
     const duration = moveToDoor(user.userId, roomId)
     await delay(duration * 1000)
-    moveInsideRoom(user.userId, event, roomId)
+    moveInsideRoom(user.userId, X, Y, roomId)
 }
 
-const roomToRoom = async (user, event, roomId) => {
+const roomToRoom = async (user, X, Y, roomId) => {
     const duration = moveToDoor(user.userId, user.position.room)
     await delay(duration * 1000)
     const duration2 = moveToDoor(user.userId, roomId)
     await delay(duration2 * 1000)
-    moveInsideRoom(user.userId, event, roomId)
+    moveInsideRoom(user.userId, X, Y, roomId)
 }
 
-const moveInsideRoom = (userId, event, roomId ) => {
+const moveInsideRoom = (userId, X, Y, roomId ) => {
     const user = rootstore.officeStore.users.find(user => user.userId === userId)
-    console.log(userId, user, rootstore.officeStore.users)
     const rooms = document.getElementById('rooms')
-    const positionX = event.clientX - rooms.offsetLeft
-    const positionY = event.clientY - rooms.offsetTop
+    const positionX = X - rooms.offsetLeft
+    const positionY = Y - rooms.offsetTop
     const transitionTime = calcTravelTime(user.position.coordinates.x, user.position.coordinates.y, positionX, positionY)
     rootstore.officeStore.changePosition(userId, { room: roomId, coordinates: { x: positionX, y: positionY } }, transitionTime)
     return transitionTime

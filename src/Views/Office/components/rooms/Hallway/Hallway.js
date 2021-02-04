@@ -1,12 +1,22 @@
 import './Hallway.css'
 import { observer } from 'mobx-react'
 import { rootstore } from '../../../../..'
-import move from '../../../../../Hooks/Mover'
 
 const Hallway = observer((props) => {
-    const userStore = rootstore.userStore
+    const { socketStore } = rootstore
+
+    const move = (event) => {
+        const position = {
+            room: -1,
+            coordinates: {
+                x: event.clientX,
+                y: event.clientY
+            }
+        }
+        socketStore.emitPosition(position)
+    }
     return (
-        <div className={`hallway ${props.first && 'first-block'} ${props.last && 'last-block'}`} onDoubleClick={(event) => move(event, -1, userStore.user._id)}>
+        <div className={`hallway ${props.first && 'first-block'} ${props.last && 'last-block'}`} onDoubleClick={(e) => move(e)}>
         </div>
     );
 })

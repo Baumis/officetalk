@@ -72,6 +72,18 @@ class OfficeStore {
         }
     }
 
+    muteEmployee =  (id, value) => {
+        let usersClone = JSON.parse(JSON.stringify(this.users))
+        usersClone.find(user => user.userId === id).muted = value
+        this.users = usersClone
+    }
+
+    silenceEmployee = (id, value) => {
+        let usersClone = JSON.parse(JSON.stringify(this.users))
+        usersClone.find(user => user.userId === id).silenced = value
+        this.users = usersClone
+    }
+
     changePosition = (id, position, transitionTime) => {
         let usersClone = JSON.parse(JSON.stringify(this.users))
         usersClone.find(user => user.userId === id).position = position
