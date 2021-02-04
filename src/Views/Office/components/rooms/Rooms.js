@@ -1,5 +1,5 @@
 import './Rooms.css'
-import { observer } from 'mobx-react';
+import { observer, } from 'mobx-react'
 import { rootstore } from '../../../../index'
 import Room from './Room/Room'
 import Hallway from './Hallway/Hallway'

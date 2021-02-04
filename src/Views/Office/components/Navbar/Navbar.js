@@ -4,18 +4,24 @@ import { rootstore } from '../../../../index'
 import { FiSettings, FiMic, FiVolume2, FiMicOff, FiVolumeX } from 'react-icons/fi'
 
 const Navbar = observer((props) => {
-    const {userStore, socketStore, officeStore} = rootstore
+    const { userStore, socketStore, officeStore } = rootstore
 
     const toggleMic = () => {
         userStore.setMuted(!userStore.muted)
+        socketStore.emitMuted(!userStore.muted)
     }
 
     const toggleVolume = () => {
         if (!userStore.silenced) {
+            
             userStore.setSilenced(true)
             userStore.setMuted(true)
+
+            socketStore.emitSilenced(true)
+            socketStore.emitMuted(true)
         } else {
             userStore.setSilenced(false)
+            socketStore.emitSilenced(false)
         }
     }
 
@@ -27,7 +33,7 @@ const Navbar = observer((props) => {
 
     const getCurrentRoom = () => {
         const user = officeStore.users.find(user => user.userId === userStore.user._id)
-        if(!user){
+        if (!user) {
             return 'loading...'
         }
         const roomId = user.position.room

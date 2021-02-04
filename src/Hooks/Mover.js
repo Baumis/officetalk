@@ -4,7 +4,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 
 const move = async (X, Y, roomId, userId) => {
     const user = rootstore.officeStore.users.find(user => user.userId === userId)
-    console.log(roomId, user.position.room)
+
     if (roomId !== user.position.room) {
         if (roomId === -1) {
             await roomToHall(user, X, Y, roomId, userId)
@@ -41,8 +41,8 @@ const roomToRoom = async (user, X, Y, roomId) => {
 const moveInsideRoom = (userId, X, Y, roomId ) => {
     const user = rootstore.officeStore.users.find(user => user.userId === userId)
     const rooms = document.getElementById('rooms')
-    const positionX = X - rooms.offsetLeft
-    const positionY = Y - rooms.offsetTop
+    const positionX = X 
+    const positionY = Y 
     const transitionTime = calcTravelTime(user.position.coordinates.x, user.position.coordinates.y, positionX, positionY)
     rootstore.officeStore.changePosition(userId, { room: roomId, coordinates: { x: positionX, y: positionY } }, transitionTime)
     return transitionTime

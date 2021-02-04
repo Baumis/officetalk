@@ -14,7 +14,9 @@ class SocketStore {
             socket: observable,
             connectToOffice: action,
             disconnectSocket: action,
-            emitPosition: action
+            emitPosition: action,
+            emitMuted: action,
+            emitSilenced: action
         })
     }
 
@@ -36,10 +38,10 @@ class SocketStore {
         this.socket.on('employeeState', (employee) => {
             const targetUser = rootstore.officeStore.users.find(user => user.userId === employee.userId)
             if (targetUser.muted !== employee.muted) {
-                rootstore.officeStore.muteEmployee(employee.muted)
+                rootstore.officeStore.muteEmployee(employee.userId, employee.muted)
             }
             if (targetUser.silenced !== employee.silenced) {
-                rootstore.officeStore.silenceEmployee(employee.silenced)
+                rootstore.officeStore.silenceEmployee(employee.userId, employee.silenced)
             }
             if (targetUser.position !== employee.position) {
                 move(
@@ -60,6 +62,18 @@ class SocketStore {
         const myId = rootstore.userStore.user._id
         const state = JSON.parse(JSON.stringify(this.rootStore.officeStore.users.find(user => user.userId === myId)))
         this.socket.emit('employeeState', { employeeState: { ...state, position: position } })
+    }
+
+    emitMuted = (muted) => {
+        const myId = rootstore.userStore.user._id
+        const state = JSON.parse(JSON.stringify(this.rootStore.officeStore.users.find(user => user.userId === myId)))
+        this.socket.emit('employeeState', { employeeState: { ...state, muted: muted } })
+    }
+
+    emitSilenced = (silenced) => {
+        const myId = rootstore.userStore.user._id
+        const state = JSON.parse(JSON.stringify(this.rootStore.officeStore.users.find(user => user.userId === myId)))
+        this.socket.emit('employeeState', { employeeState: { ...state, silenced: silenced } })
     }
 }
 

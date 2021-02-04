@@ -7,18 +7,7 @@ class OfficeStore {
     office = null
     organization = null
 
-    users = [{
-        id: "600fddd784a2d221e466a3f9",
-        name: 'Axel Baumgartner',
-        position: { room: -1, coordinates: { x: 5, y: 360 } },
-        transitionTime: 2
-    },
-    {
-        id: "600fdd8584a2d221e466a3f8",
-        name: "600fddd784a2d221e466a3f9",
-        position: { room: -1, coordinates: { x: 5, y: 360 } },
-        transitionTime: 2
-    }]
+    users = []
 
     constructor(rootStore) {
         this.rootStore = rootStore
@@ -44,7 +33,6 @@ class OfficeStore {
     }
 
     setEmployeeStates = (employees) => {
-        console.log(employees)
         this.users = employees
     }
 
