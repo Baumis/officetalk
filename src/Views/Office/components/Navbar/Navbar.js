@@ -4,8 +4,7 @@ import { rootstore } from '../../../../index'
 import { FiSettings, FiMic, FiVolume2, FiMicOff, FiVolumeX } from 'react-icons/fi'
 
 const Navbar = observer((props) => {
-    const userStore = rootstore.userStore
-    const officeStore = rootstore.officeStore
+    const {userStore, socketStore, officeStore} = rootstore
 
     const toggleMic = () => {
         userStore.setMuted(!userStore.muted)
@@ -22,7 +21,7 @@ const Navbar = observer((props) => {
 
     const signOut = () => {
         userStore.signOut()
-        props.disconnectSocket()
+        socketStore.disconnectSocket()
         props.navigateTo('login')
     }
 

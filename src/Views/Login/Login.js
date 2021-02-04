@@ -5,7 +5,7 @@ import Dots from '../Office/components/Dots/Dots'
 import { AiOutlineUser, AiOutlineShop } from 'react-icons/ai'
 
 function Login(props) {
-    const userStore = rootstore.userStore
+    const { userStore, socketStore } = rootstore
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -30,7 +30,7 @@ function Login(props) {
         try {
             setLoading(true)
             const response = await userStore.signIn(username, password)
-            props.connectSocket(response.token, response.user.organization)
+            socketStore.connectToOffice(response.token, response.user.organization)
             props.navigateTo('office')
             setLoading(false)
 

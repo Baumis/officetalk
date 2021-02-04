@@ -8,48 +8,25 @@ import './App.css'
 
 const App = observer(() => {
   const userStore = rootstore.userStore
-  const officeStore = rootstore.officeStore
+  const socketStore = rootstore.socketStore
   const [page, setPage] = useState('login')
-
-  const socket = useRef()
 
   useEffect(() => {
     const checkLogin = async () => {
       const response = await userStore.checkSignIn()
       response.user && setPage('office')
-      connectSocket(response.token, response.user.organization)
+      socketStore.connectToOffice(response.token, response.user.organization)
     }
 
     checkLogin()
   }, [userStore])
 
-  const connectSocket = (token, organization) => {
-    socket.current = io.connect(`/${organization}`, {
-      auth: {
-        token
-      }
-    })
-
-    socket.current.on('message', (message) => {
-      officeStore.receiveMessage(message)
-    })
-
-    socket.current.on('employees', (employees) => {
-      officeStore.setEmployeeStates(employees)
-    })
-
-  }
-
-  const disconnectSocket = () => {
-    socket.current.disconnect()
-  }
-
   const renderPage = () => {
     switch (page) {
       case 'login':
-        return <Login navigateTo={setPage} connectSocket={connectSocket} />
+        return <Login navigateTo={setPage} />
       case 'office':
-        return <Office navigateTo={setPage} disconnectSocket={disconnectSocket} />
+        return <Office navigateTo={setPage} />
       case 'controlPanel':
         return <Login navigateTo={setPage} />
       default:
