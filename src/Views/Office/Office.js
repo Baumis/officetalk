@@ -27,14 +27,13 @@ const Office = observer((props) => {
             const peer1 = new Peer({ initiator: true, trickle: false, stream: stream })
             
             socketStore.socket.on('callAccepted', signal => {
-                console.log('call Accepted')
+                console.log('accept call')
                 peer1.signal(signal)
             })
     
             peer1.on('signal', data => {
-                console.log('signal received')
-
-                socketStore.socket.emit('startCall', { signal: data })
+                console.log('emiting signal')
+                socketStore.socket.emit('startCall', data)
             })
     
             peer1.on('stream', stream => {
