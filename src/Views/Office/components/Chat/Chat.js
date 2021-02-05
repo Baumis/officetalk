@@ -10,8 +10,7 @@ const Chat = observer((props) => {
     const [message, setMessage] = useState('')
     const [sending, setSending] = useState(false)
     const [activeChat, setActiveChat] = useState('office')
-    const officeStore = rootstore.officeStore
-    const userStore = rootstore.userStore
+    const { officeStore, userStore } = rootstore
 
     const sendMessage = async () => {
         setSending(true)
@@ -23,9 +22,16 @@ const Chat = observer((props) => {
         }
     }
 
+    const sendRoomMessage = () => {
+        setSending(true)
+        officeStore.sendRoomMessage(message)
+        setSending(false)
+        setMessage('')
+    }
+
     const getCurrentRoom = () => {
         const user = officeStore.users.find(user => user.userId === userStore.user._id)
-        if(!user){
+        if (!user) {
             return 'loading...'
         }
         const roomId = user.position.room
@@ -37,6 +43,10 @@ const Chat = observer((props) => {
         }
     }
 
+    const messagesToDisplay = () => {
+        return activeChat === 'office' ? officeStore.office.messages : officeStore.roomMessages
+    }
+
     return (
         <div className="chat block-shadow">
             <div className="chat-tabs block-shadow">
@@ -44,7 +54,7 @@ const Chat = observer((props) => {
                 <div className={`chat-tab ${activeChat === 'room' && 'chat-tab-active'}`} onClick={() => setActiveChat('room')}>{getCurrentRoom()}</div>
             </div>
             <div className="chat-messages">
-                {rootstore.officeStore.office.messages.map((message, key) =>
+                {messagesToDisplay().map((message, key) =>
                     <Message key={key} message={message} />
                 )}
             </div>
@@ -55,11 +65,11 @@ const Chat = observer((props) => {
                         placeholder={'Say something'}
                         onChange={(event) => setMessage(event.target.value)}
                     />
-                    <div className="chat-send" onClick={sendMessage}>
+                    <div className="chat-send" onClick={activeChat === 'office' ? sendMessage : sendRoomMessage}>
                         {sending ?
                             <Dots />
                             :
-                            <AiOutlineSend size={30}/>
+                            <AiOutlineSend size={30} />
                         }
                     </div>
                 </div>

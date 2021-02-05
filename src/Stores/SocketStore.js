@@ -52,6 +52,10 @@ class SocketStore {
                 )
             }
         })
+
+        this.socket.on('roomMessage', (roomMessage) => {
+            this.rootStore.officeStore.receiveRoomMessage(roomMessage)
+        })
     }
 
     disconnectSocket = () => {
@@ -74,6 +78,10 @@ class SocketStore {
         const myId = rootstore.userStore.user._id
         const state = JSON.parse(JSON.stringify(this.rootStore.officeStore.users.find(user => user.userId === myId)))
         this.socket.emit('employeeState', { employeeState: { ...state, silenced: silenced } })
+    }
+
+    emitRoomMessage = (content) => {
+        this.socket.emit('roomMessage', { content })
     }
 }
 

@@ -6,6 +6,7 @@ class OfficeStore {
     rootStore = null
     office = null
     organization = null
+    roomMessages = []
 
     users = []
 
@@ -16,11 +17,14 @@ class OfficeStore {
             office: observable,
             organization: observable,
             users: observable,
+            roomMessages: observable,
             receiveMessage: action,
             changePosition: action,
             sendMessage: action,
             fetchOffice: action,
-            setEmployeeStates: action
+            setEmployeeStates: action,
+            receiveRoomMessage: action,
+            sendRoomMessage: action
         })
     }
 
@@ -34,6 +38,10 @@ class OfficeStore {
 
     setEmployeeStates = (employees) => {
         this.users = employees
+    }
+
+    sendRoomMessage = (content) => {
+        this.rootStore.socketStore.emitRoomMessage(content)
     }
 
     sendMessage = async (content) => {
@@ -60,7 +68,7 @@ class OfficeStore {
         }
     }
 
-    muteEmployee =  (id, value) => {
+    muteEmployee = (id, value) => {
         let usersClone = JSON.parse(JSON.stringify(this.users))
         usersClone.find(user => user.userId === id).muted = value
         this.users = usersClone
@@ -77,6 +85,12 @@ class OfficeStore {
         usersClone.find(user => user.userId === id).position = position
         usersClone.find(user => user.userId === id).transitionTime = transitionTime
         this.users = usersClone
+    }
+
+    receiveRoomMessage = (message) => {
+        if (!this.roomMessages.find(msg => msg._id === message._id)) {
+            this.roomMessages = [message].concat(this.roomMessages)
+        }
     }
 }
 
