@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import './Office.css'
 import { observer } from 'mobx-react'
-import { isObservable} from 'mobx'
 import Navbar from './components/Navbar/Navbar'
 import Chat from './components/Chat/Chat'
 import Rooms from './components/rooms/Rooms'
@@ -10,17 +9,41 @@ import Loading from './components/Loading/Loading'
 import CoWorkers from './components/CoWorkers/CoWorkers'
 import Settings from './components/Settings/Settings'
 import { FiUsers } from 'react-icons/fi'
+import Peer from 'simple-peer'
 
 const Office = observer((props) => {
-    const officeStore = rootstore.officeStore
-    const userStore = rootstore.userStore
+    const { officeStore, userStore, socketStore } = rootstore
     const [showCoWorkers, setShowCoWorkers] = useState(false)
     const [showSettings, setShowSettings] = useState(false)
+
+    const peerAudio = useRef()
 
     useEffect(() => {
         const fetchOrganization = async () => {
             await officeStore.fetchOffice(userStore.user.organization)
         }
+
+        navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {            
+            const peer1 = new Peer({ initiator: true, trickle: false, stream: stream })
+            
+            socketStore.socket.on('callAccepted', signal => {
+                console.log('call Accepted')
+                peer1.signal(signal)
+            })
+    
+            peer1.on('signal', data => {
+                console.log('signal received')
+
+                socketStore.socket.emit('startCall', { signal: data })
+            })
+    
+            peer1.on('stream', stream => {
+                console.log('stream received')
+                if (peerAudio.current) {
+                    peerAudio.current.srcObject = stream
+                }
+            })
+        })
 
         fetchOrganization()
     }, [officeStore, userStore])
@@ -47,6 +70,7 @@ const Office = observer((props) => {
             </div>
             <CoWorkers show={showCoWorkers} close={() => setShowCoWorkers(false)}/>
             {showSettings && <Settings setShowSettings={setShowSettings} />}
+            <video playsInline ref={peerAudio} autoPlay style={{height: '0px'}}/>
         </div>
     )
 })
