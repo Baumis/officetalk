@@ -31,7 +31,7 @@ const Avatar = observer((props) => {
         <div className="avatar" style={{
             top: props.user.position.coordinates.y,
             left: props.user.position.coordinates.x,
-            transition: `all ${props.user.transitionTime}s ease-in-out`,
+            transition: `all ${props.user.transitionTime}s linear`,
             border: `${props.user.userId === userStore.user._id ? '2' : '1'}px solid ${props.user.userId === userStore.user._id ? '#1CBF73' : 'black'}`,
             backgroundImage: `url(${getUserAvatar()})`
         }}>
