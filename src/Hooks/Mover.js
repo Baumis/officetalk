@@ -21,26 +21,29 @@ const move = async (X, Y, roomId, userId) => {
 const roomToHall = async (user, X, Y, roomId, userId) => {
     const duration = moveToDoor(userId, user.position.room)
     await delay(duration * 1000)
+    if(user.userId === rootstore.userStore.user._id) rootstore.officeStore.clearRoomChat()
     moveInsideRoom(userId, X, Y, roomId)
 }
 
 const hallToRoom = async (user, X, Y, roomId) => {
     const duration = moveToDoor(user.userId, roomId)
     await delay(duration * 1000)
+    if(user.userId === rootstore.userStore.user._id) rootstore.officeStore.clearRoomChat()
     moveInsideRoom(user.userId, X, Y, roomId)
 }
 
 const roomToRoom = async (user, X, Y, roomId) => {
     const duration = moveToDoor(user.userId, user.position.room)
     await delay(duration * 1000)
+    if(user.userId === rootstore.userStore.user._id) rootstore.officeStore.clearRoomChat()
     const duration2 = moveToDoor(user.userId, roomId)
     await delay(duration2 * 1000)
+    if(user.userId === rootstore.userStore.user._id) rootstore.officeStore.clearRoomChat()
     moveInsideRoom(user.userId, X, Y, roomId)
 }
 
 const moveInsideRoom = (userId, X, Y, roomId ) => {
     const user = rootstore.officeStore.users.find(user => user.userId === userId)
-    const rooms = document.getElementById('rooms')
     const positionX = X 
     const positionY = Y 
     const transitionTime = calcTravelTime(user.position.coordinates.x, user.position.coordinates.y, positionX, positionY)

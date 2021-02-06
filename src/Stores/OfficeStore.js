@@ -24,7 +24,8 @@ class OfficeStore {
             fetchOffice: action,
             setEmployeeStates: action,
             receiveRoomMessage: action,
-            sendRoomMessage: action
+            sendRoomMessage: action,
+            clearRoomChat: action
         })
     }
 
@@ -91,6 +92,10 @@ class OfficeStore {
         if (!this.roomMessages.find(msg => msg._id === message._id)) {
             this.roomMessages = [message].concat(this.roomMessages)
         }
+    }
+
+    clearRoomChat = () => {
+        this.roomMessages = []
     }
 }
 

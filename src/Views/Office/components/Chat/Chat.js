@@ -4,7 +4,7 @@ import './Chat.css';
 import Message from './Message/Message'
 import { rootstore } from '../../../../index'
 import Dots from '../Dots/Dots'
-import { AiOutlineSend } from 'react-icons/ai'
+import { AiOutlineSend, AiOutlineInfoCircle } from 'react-icons/ai'
 
 const Chat = observer((props) => {
     const [message, setMessage] = useState('')
@@ -53,6 +53,10 @@ const Chat = observer((props) => {
                 <div className={`chat-tab ${activeChat === 'office' && 'chat-tab-active'}`} onClick={() => setActiveChat('office')}>Office</div>
                 <div className={`chat-tab ${activeChat === 'room' && 'chat-tab-active'}`} onClick={() => setActiveChat('room')}>{getCurrentRoom()}</div>
             </div>
+            {activeChat === 'room' &&
+                <div className="chat-messages-warning">
+                    <AiOutlineInfoCircle style={{marginRight: '5px'}} size={18}/>Message history is not saved in rooms.
+            </div>}
             <div className="chat-messages">
                 {messagesToDisplay().map((message, key) =>
                     <Message key={key} message={message} />
