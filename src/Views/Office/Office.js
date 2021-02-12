@@ -33,7 +33,7 @@ const Office = observer((props) => {
     
             peer1.on('signal', data => {
                 console.log('emiting signal')
-                socketStore.socket.emit('startCall', data)
+                socketStore.emitStartCall(data)
             })
     
             peer1.on('stream', stream => {

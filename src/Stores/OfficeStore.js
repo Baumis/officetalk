@@ -23,6 +23,8 @@ class OfficeStore {
             sendMessage: action,
             fetchOffice: action,
             setEmployeeStates: action,
+            addEmployeeState: action,
+            removeEmployeeState: action,
             receiveRoomMessage: action,
             sendRoomMessage: action,
             clearRoomChat: action
@@ -39,6 +41,14 @@ class OfficeStore {
 
     setEmployeeStates = (employees) => {
         this.users = employees
+    }
+
+    addEmployeeState = (employeeState) => {
+        this.users = this.users.concat(employeeState)
+    }
+
+    removeEmployeeState = (employeeState) => {
+        this.users = this.users.filter(user => user.employeeId !== employeeState.employeeId)
     }
 
     sendRoomMessage = (content) => {
@@ -71,20 +81,20 @@ class OfficeStore {
 
     muteEmployee = (id, value) => {
         let usersClone = JSON.parse(JSON.stringify(this.users))
-        usersClone.find(user => user.userId === id).muted = value
+        usersClone.find(user => user.employeeId === id).muted = value
         this.users = usersClone
     }
 
     silenceEmployee = (id, value) => {
         let usersClone = JSON.parse(JSON.stringify(this.users))
-        usersClone.find(user => user.userId === id).silenced = value
+        usersClone.find(user => user.employeeId === id).silenced = value
         this.users = usersClone
     }
 
     changePosition = (id, position, transitionTime) => {
         let usersClone = JSON.parse(JSON.stringify(this.users))
-        usersClone.find(user => user.userId === id).position = position
-        usersClone.find(user => user.userId === id).transitionTime = transitionTime
+        usersClone.find(user => user.employeeId === id).position = position
+        usersClone.find(user => user.employeeId === id).transitionTime = transitionTime
         this.users = usersClone
     }
 

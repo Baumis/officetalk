@@ -42,7 +42,7 @@ const Rooms = observer(() => {
                 }
             </div>
             <div className="user-layer">
-                {officeStore.users.map(user => <Avatar key={user.userId} user={user} />)}
+                {officeStore.users.map(user => <Avatar key={user.employeeId} user={user} />)}
             </div>
         </div>
     )
