@@ -2,6 +2,7 @@
     display: flex;
     position: absolute;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
     border-radius: 50%;
     background-color: #7a7d85;
@@ -13,7 +14,13 @@
     margin-left: -25px;
     height: 50px;
     width: 50px;
-    transition: all 2s ease-in-out;
+    transition-timing-function: linear;
+}
+
+.avatar:hover .avatar-info{
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #404145;
 }
 
 .avatar-shadow {
@@ -24,4 +31,17 @@
     border-radius: 50%;
     height: 50px;
     width: 50px;
+}
+
+.avatar-info {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    background: transparent;
+    color: transparent;
+    top: 0px;
+    left: 55px;
+    border-radius: 3px;
+    width: 110px;
 }

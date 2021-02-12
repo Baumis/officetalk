@@ -27,7 +27,7 @@ const Avatar = observer((props) => {
         }
     }
 
-    console.log(officeStore.users.find(empl => empl.employeeId === props.user.employeeId))
+    const employeeInfo = officeStore.organization.employees.find(empl => empl._id === props.user.employeeId)
 
     return (
         <div className="avatar" style={{
@@ -39,6 +39,11 @@ const Avatar = observer((props) => {
         }}>
             <div className="avatar-shadow" style={{backgroundColor: getIcon() ? '#00000041': 'transparent'}}>
             {getIcon()}
+            </div>
+            <div className="avatar-info">
+                <div className="avatar-info-name">
+                    {employeeInfo.name}
+                </div>
             </div>
         </div>
     )
