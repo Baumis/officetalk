@@ -33,6 +33,7 @@ class SocketStore {
 
         this.socket.on('employees', (employees) => {
             this.rootStore.officeStore.setEmployeeStates(employees)
+            this.rootStore.mediaStore.connectToPeers()
         })
 
         this.socket.on('employeeState', (employee) => {

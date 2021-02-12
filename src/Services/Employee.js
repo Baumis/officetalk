@@ -6,4 +6,5 @@ const updateEmployee = async (employee) => {
     return response.data
 }
 
-export default { updateEmployee }
+const services = { updateEmployee }
+export default services

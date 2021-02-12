@@ -6,4 +6,5 @@ const sendOfficeMessage = async (content) => {
     return response.data
 }
 
-export default { sendOfficeMessage }
+const services = { sendOfficeMessage }
+export default services

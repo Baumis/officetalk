@@ -6,4 +6,5 @@ const getOrganization = async (id) => {
     return response.data
 }
 
-export default { getOrganization }
+const services = { getOrganization }
+export default services

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import './Office.css'
 import { observer } from 'mobx-react'
 import Navbar from './components/Navbar/Navbar'
@@ -9,48 +9,29 @@ import Loading from './components/Loading/Loading'
 import CoWorkers from './components/CoWorkers/CoWorkers'
 import Settings from './components/Settings/Settings'
 import { FiUsers } from 'react-icons/fi'
-import Peer from 'simple-peer'
+import Player from 'react-player'
 
 const Office = observer((props) => {
-    const { officeStore, userStore, socketStore } = rootstore
+    const { officeStore, userStore, mediaStore } = rootstore
     const [showCoWorkers, setShowCoWorkers] = useState(false)
     const [showSettings, setShowSettings] = useState(false)
-
-    const peerAudio = useRef()
 
     useEffect(() => {
         const fetchOrganization = async () => {
             await officeStore.fetchOffice(userStore.user.organization)
         }
-
-        navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {            
-            const peer1 = new Peer({ initiator: true, trickle: false, stream: stream })
-            
-            socketStore.socket.on('callAccepted', signal => {
-                console.log('accept call')
-                peer1.signal(signal)
-            })
-    
-            peer1.on('signal', data => {
-                console.log('emiting signal')
-                socketStore.socket.emit('startCall', data)
-            })
-    
-            peer1.on('stream', stream => {
-                console.log('stream received')
-                if (peerAudio.current) {
-                    peerAudio.current.srcObject = stream
-                }
-            })
-        })
-
         fetchOrganization()
+
+        /*window.addEventListener("beforeunload", () => mediaStore.disconnectPeer())
+        return () => window.removeEventListener("beforeunload", () => mediaStore.disconnectPeer())*/
+
     }, [officeStore, userStore])
 
     if (!officeStore.office) {
         return <Loading />
     }
 
+    console.log('peerAudio in mediaStore:', mediaStore.peerAudio)
     return (
         <div className="office">
             <Navbar
@@ -64,12 +45,12 @@ const Office = observer((props) => {
                 </div>
             </div>
             <div className="office-toggle-coworkers" onClick={() => setShowCoWorkers(!showCoWorkers)}>
-                <FiUsers style={{marginRight: '3px'}} size={18}/>
+                <FiUsers style={{ marginRight: '3px' }} size={18} />
                 {`Co-workers (${officeStore.organization.employees.length})`}
             </div>
-            <CoWorkers show={showCoWorkers} close={() => setShowCoWorkers(false)}/>
+            <CoWorkers show={showCoWorkers} close={() => setShowCoWorkers(false)} />
             {showSettings && <Settings setShowSettings={setShowSettings} />}
-            <video playsInline ref={peerAudio} autoPlay style={{height: '0px'}}/>
+            <Player playsInline url={mediaStore.peerAudio} playing={true} style={{ height: '0px' }} height={'0px'} width={'0px'} />
         </div>
     )
 })

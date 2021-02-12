@@ -21,4 +21,5 @@ const SignOut = async () => {
     return response.data
 }
 
-export default { signInWithToken, signInEmployee, signInOrganization, SignOut }
+const services = { signInWithToken, signInEmployee, signInOrganization, SignOut }
+export default services

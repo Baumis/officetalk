@@ -1,7 +1,6 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
 import { rootstore } from './index'
-import { io } from 'socket.io-client'
 import Login from './Views/Login/Login'
 import Office from './Views/Office/Office'
 import './App.css'
@@ -19,7 +18,7 @@ const App = observer(() => {
     }
 
     checkLogin()
-  }, [userStore])
+  }, [userStore, socketStore])
 
   const renderPage = () => {
     switch (page) {
