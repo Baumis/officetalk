@@ -12,7 +12,7 @@ const addRoomMessage = async (content) => {
 }
 
 const startCall = async (data) => {
-    const response = await axios.put(`${baseUrl}/startCall`, data)
+    const response = await axios.post(`${baseUrl}/startCall`, data)
     return response.data
 }
 
