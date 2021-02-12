@@ -21,10 +21,6 @@ const Office = observer((props) => {
             await officeStore.fetchOffice(userStore.user.organization)
         }
         fetchOrganization()
-
-        /*window.addEventListener("beforeunload", () => mediaStore.disconnectPeer())
-        return () => window.removeEventListener("beforeunload", () => mediaStore.disconnectPeer())*/
-
     }, [officeStore, userStore])
 
     if (!officeStore.office) {

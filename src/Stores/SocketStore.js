@@ -2,6 +2,7 @@ import { makeObservable, observable, action } from 'mobx'
 import { io } from 'socket.io-client'
 import { rootstore } from '..'
 import move from '../Hooks/Mover'
+import Socket from '../Services/Socket'
 
 class SocketStore {
     rootStore = null
@@ -21,7 +22,7 @@ class SocketStore {
     }
 
     connectToOffice = (token, organization) => {
-        this.socket = io.connect(`/${organization}`, {
+        this.socket = io.connect(`/`, {
             auth: {
                 token
             }
@@ -31,25 +32,33 @@ class SocketStore {
             this.rootStore.officeStore.receiveMessage(message)
         })
 
-        this.socket.on('employees', (employees) => {
-            this.rootStore.officeStore.setEmployeeStates(employees)
+        this.socket.on('employeeStates', (employeeStates) => {
+            this.rootStore.officeStore.setEmployeeStates(employeeStates)
             this.rootStore.mediaStore.connectToPeers()
         })
 
-        this.socket.on('employeeState', (employee) => {
-            const targetUser = rootstore.officeStore.users.find(user => user.userId === employee.userId)
-            if (targetUser.muted !== employee.muted) {
-                rootstore.officeStore.muteEmployee(employee.userId, employee.muted)
+        this.socket.on('addEmployeeState', (employeeState) => {
+            this.rootStore.officeStore.addEmployeeState(employeeState)
+        })
+
+        this.socket.on('removeEmployeeState', (employeeState) => {
+            this.rootStore.officeStore.removeEmployeeState(employeeState)
+        })
+
+        this.socket.on('updateEmployeeState', (employeeState) => {
+            const targetUser = rootstore.officeStore.users.find(user => user.employeeId === employeeState.employeeId)
+            if (targetUser.muted !== employeeState.muted) {
+                rootstore.officeStore.muteEmployee(employeeState.employeeId, employeeState.muted)
             }
-            if (targetUser.silenced !== employee.silenced) {
-                rootstore.officeStore.silenceEmployee(employee.userId, employee.silenced)
+            if (targetUser.silenced !== employeeState.silenced) {
+                rootstore.officeStore.silenceEmployee(employeeState.employeeId, employeeState.silenced)
             }
-            if (targetUser.position !== employee.position) {
+            if (targetUser.position !== employeeState.position) {
                 move(
-                    employee.position.coordinates.x,
-                    employee.position.coordinates.y,
-                    employee.position.room,
-                    employee.userId
+                    employeeState.position.coordinates.x,
+                    employeeState.position.coordinates.y,
+                    employeeState.position.room,
+                    employeeState.employeeId
                 )
             }
         })
@@ -65,24 +74,28 @@ class SocketStore {
 
     emitPosition = (position) => {
         const myId = rootstore.userStore.user._id
-        const state = JSON.parse(JSON.stringify(this.rootStore.officeStore.users.find(user => user.userId === myId)))
-        this.socket.emit('employeeState', { employeeState: { ...state, position: position } })
+        const state = JSON.parse(JSON.stringify(this.rootStore.officeStore.users.find(user => user.employeeId === myId)))
+        Socket.updateState({ ...state, position: position })
     }
 
     emitMuted = (muted) => {
         const myId = rootstore.userStore.user._id
-        const state = JSON.parse(JSON.stringify(this.rootStore.officeStore.users.find(user => user.userId === myId)))
-        this.socket.emit('employeeState', { employeeState: { ...state, muted: muted } })
+        const state = JSON.parse(JSON.stringify(this.rootStore.officeStore.users.find(user => user.employeeId === myId)))
+        Socket.updateState({ ...state, muted })
     }
 
     emitSilenced = (silenced) => {
         const myId = rootstore.userStore.user._id
-        const state = JSON.parse(JSON.stringify(this.rootStore.officeStore.users.find(user => user.userId === myId)))
-        this.socket.emit('employeeState', { employeeState: { ...state, silenced: silenced } })
+        const state = JSON.parse(JSON.stringify(this.rootStore.officeStore.users.find(user => user.employeeId === myId)))
+        Socket.updateState({ ...state, silenced })
     }
 
     emitRoomMessage = (content) => {
-        this.socket.emit('roomMessage', { content })
+        Socket.addRoomMessage({ content })
+    }
+
+    emitStartCall = (data) => {
+        Socket.startCall(data)
     }
 }
 

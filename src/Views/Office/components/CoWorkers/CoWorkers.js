@@ -8,7 +8,7 @@ const CoWorkers = observer((props) => {
     const officeStore = rootstore.officeStore
 
     const isOnline = (employee) => {
-        return officeStore.users.find(user => user.userId === employee._id)
+        return officeStore.users.find(user => user.employeeId === employee._id)
     }
 
     return (
