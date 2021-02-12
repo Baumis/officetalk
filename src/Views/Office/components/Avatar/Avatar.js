@@ -19,13 +19,15 @@ const Avatar = observer((props) => {
 
     const getIcon = () => {
         if(props.user.silenced) {
-            return <FiVolumeX size={22} className="navbar-voice-volume" color={'#F74040'} />
+            return <FiVolumeX size={22} className="avatar-voice-volume" color={'#F74040'} />
         }else if (props.user.muted) {
-            return <FiMicOff size={22} className="navbar-voice-microphone" color={'#F74040'} />
+            return <FiMicOff size={22} className="avatar-voice-microphone" color={'#F74040'} />
         }else {
-            return 
+            return false
         }
     }
+
+    console.log(officeStore.users.find(empl => empl.employeeId === props.user.employeeId))
 
     return (
         <div className="avatar" style={{
@@ -35,7 +37,9 @@ const Avatar = observer((props) => {
             border: `${props.user.employeeId === userStore.user._id ? '2' : '1'}px solid ${props.user.employeeId === userStore.user._id ? '#1CBF73' : 'black'}`,
             backgroundImage: `url(${getUserAvatar()})`
         }}>
+            <div className="avatar-shadow" style={{backgroundColor: getIcon() ? '#00000041': 'transparent'}}>
             {getIcon()}
+            </div>
         </div>
     )
 })

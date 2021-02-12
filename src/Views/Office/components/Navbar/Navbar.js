@@ -7,22 +7,15 @@ const Navbar = observer((props) => {
     const { userStore, socketStore, officeStore } = rootstore
 
     const toggleMic = () => {
-        userStore.setMuted(!userStore.muted)
-        socketStore.emitMuted(!userStore.muted)
+        const setTo = !userStore.muted
+        userStore.setMuted(setTo)
+        socketStore.emitMuted(setTo)
     }
 
     const toggleVolume = () => {
-        if (!userStore.silenced) {
-            
-            userStore.setSilenced(true)
-            userStore.setMuted(true)
-
-            socketStore.emitSilenced(true)
-            socketStore.emitMuted(true)
-        } else {
-            userStore.setSilenced(false)
-            socketStore.emitSilenced(false)
-        }
+        const setTo = !userStore.silenced
+        userStore.setSilenced(setTo)
+        socketStore.emitSilenced(setTo)
     }
 
     const signOut = () => {
