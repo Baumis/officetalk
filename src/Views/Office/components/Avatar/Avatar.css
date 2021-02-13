@@ -19,7 +19,7 @@
 
 .avatar:hover .avatar-info{
     display: flex;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 1);
     color: #404145;
 }
 
@@ -40,8 +40,8 @@
     position: absolute;
     background: transparent;
     color: transparent;
-    top: 0px;
-    left: 55px;
+    top: 55px;
+    left: -27px;
     border-radius: 3px;
     width: 110px;
 }
