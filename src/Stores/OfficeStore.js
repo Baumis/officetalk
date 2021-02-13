@@ -10,6 +10,44 @@ class OfficeStore {
 
     users = []
 
+    furnitures = [
+        {
+            type: 'meeting-table',
+            height: '150px',
+            width: '85px',
+            position: {x: 108, y: 85},
+            direction: 'right'
+        },
+        {
+            type: 'meeting-chair',
+            height: '45px',
+            width: '45px',
+            position: {x: 198, y: 168},
+            direction: 'right'
+        },
+        {
+            type: 'meeting-chair',
+            height: '45px',
+            width: '45px',
+            position: {x: 198, y: 103},
+            direction: 'right'
+        },
+        {
+            type: 'meeting-chair',
+            height: '45px',
+            width: '45px',
+            position: {x: 58, y: 168},
+            direction: 'right'
+        },
+        {
+            type: 'meeting-chair',
+            height: '45px',
+            width: '45px',
+            position: {x: 58, y: 103},
+            direction: 'right'
+        },
+    ]
+
     constructor(rootStore) {
         this.rootStore = rootStore
         makeObservable(this, {
@@ -18,6 +56,7 @@ class OfficeStore {
             organization: observable,
             users: observable,
             roomMessages: observable,
+            furnitures: observable,
             receiveMessage: action,
             changePosition: action,
             sendMessage: action,

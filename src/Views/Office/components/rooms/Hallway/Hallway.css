@@ -8,6 +8,7 @@
     border-left: 4px solid #404145;
     border-right: 4px solid #404145;
     flex-wrap: wrap;
+    cursor: crosshair;
 }
 
 .first-block {

@@ -9,6 +9,7 @@
     background: #e4e5e7;
     background-image:url('../../../../../Assets/parquet3.png');
     box-sizing: border-box;
+    cursor: crosshair;
 }
 
 .bottom-room {

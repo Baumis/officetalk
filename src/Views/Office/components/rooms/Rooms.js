@@ -4,6 +4,7 @@ import { rootstore } from '../../../../index'
 import Room from './Room/Room'
 import Hallway from './Hallway/Hallway'
 import Avatar from '../Avatar/Avatar'
+import Furniture from '../Furniture/Furniture'
 
 const Rooms = observer(() => {
     const officeStore = rootstore.officeStore
@@ -40,6 +41,9 @@ const Rooms = observer(() => {
                 {roomsCount % 2 === 1 &&
                     <div className="room-block-empty"></div>
                 }
+            </div>
+            <div className="furniture-layer">
+                {officeStore.furnitures.map(furniture => <Furniture key={furniture.furnitureId} furniture={furniture} />)}
             </div>
             <div className="user-layer">
                 {officeStore.users.map(user => <Avatar key={user.employeeId} user={user} />)}
