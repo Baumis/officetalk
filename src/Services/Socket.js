@@ -11,10 +11,15 @@ const addRoomMessage = async (content) => {
     return response.data
 }
 
-const startCall = async (data) => {
-    const response = await axios.post(`${baseUrl}/startCall`, data)
+const sendSignal = async (employeeId, signal) => {
+    const response = await axios.post(`${baseUrl}/sendSignal`, { employeeId, signal })
     return response.data
 }
 
-const services = { updateState, addRoomMessage, startCall }
+const returnSignal = async (employeeId, signal) => {
+    const response = await axios.post(`${baseUrl}/returnSignal`, { employeeId, signal })
+    return response.data
+}
+
+const services = { updateState, addRoomMessage, sendSignal, returnSignal }
 export default services
