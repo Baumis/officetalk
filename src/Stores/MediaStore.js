@@ -49,26 +49,26 @@ class MediaStore {
 
     addPeer = (signal, employeeId) => {
         const peer = new Peer({ initiator: false, trickle: false, stream: this.stream })
-        this.peer.signal(signal)
+        peer.signal(signal)
 
-        this.peer.on('signal', signal => {
+        peer.on('signal', signal => {
             console.log('returnSignal sent')
-            socket.returnSignal(signal, employeeId)
+            socket.returnSignal(employeeId, signal)
         })
 
-        this.peer.on('stream', stream => {
+        peer.on('stream', stream => {
             console.log('stream received')
             runInAction(() => {
                 this.peerAudios = [... this.peerAudios, { stream: stream, employeeId: employeeId }]
             })
         })
 
-        this.peer.on('close', () => {
+        peer.on('close', () => {
             console.log('connection closed')
             this.peer.destroy()
         })
 
-        this.peer.on('error', (err) => {
+        peer.on('error', (err) => {
             console.log('Peer error: ', err)
         })
 
@@ -82,13 +82,13 @@ class MediaStore {
 
         peer.on('signal', signal => {
             console.log('sendSignal sent')
-            socket.sendSignal(signal)
+            socket.sendSignal(employeeId, signal)
         })
 
         peer.on('stream', stream => {
             console.log('stream received')
             runInAction(() => {
-                this.peerAudio = stream
+                this.peerAudios = [... this.peerAudios, { stream: stream, employeeId: employeeId }]
             })
         })
 

@@ -27,7 +27,7 @@ const Office = observer((props) => {
         return <Loading />
     }
 
-    console.log('peerAudio in mediaStore:', mediaStore.peerAudio)
+    console.log('peerAudios in mediaStore:', mediaStore.peerAudios)
     return (
         <div className="office">
             <Navbar
@@ -46,7 +46,9 @@ const Office = observer((props) => {
             </div>
             <CoWorkers show={showCoWorkers} close={() => setShowCoWorkers(false)} />
             {showSettings && <Settings setShowSettings={setShowSettings} />}
-            <Player playsInline url={mediaStore.peerAudio} playing={true} style={{ height: '0px' }} height={'0px'} width={'0px'} />
+            {mediaStore.peerAudios.map(peerAudio => {
+                <Player playsInline url={peerAudio.stream} playing={true} style={{ height: '0px' }} height={'0px'} width={'0px'} />
+            })}
         </div>
     )
 })
