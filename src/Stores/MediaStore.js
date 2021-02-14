@@ -1,19 +1,20 @@
 import { makeObservable, observable, action, runInAction } from 'mobx'
 import Peer from 'simple-peer'
+import socket from '../Services/Socket'
 
 class MediaStore {
     rootStore = null
     stream = null
-    peer = null
-    peerAudio = null
+    peers = []
+    peerAudios = []
 
     constructor(rootStore) {
         this.rootStore = rootStore
         makeObservable(this, {
             rootStore: observable,
             stream: observable,
-            peerAudio: observable,
-            peer: observable,
+            peerAudios: observable,
+            peers: observable,
             connectToPeers: action,
             disconnectPeer: action
         })
@@ -24,32 +25,41 @@ class MediaStore {
             this.stream = stream
 
             if (this.isInitiatior()) {
-                console.log('createPeer')
-                this.createPeer()
-            } else {
-                console.log('AddPeer')
-                this.addPeer()
+                this.rootStore.officeStore.users.forEach(employee => {
+                    if(employee.employeeId !== this.rootStore.userStore.user._id){
+                        console.log('createPeer')
+                        console.log(employee.employeeId, this.rootStore.userStore.user._id)
+                        this.createPeer(employee.employeeId)
+                    }
+                })
             }
 
-            this.rootStore.socketStore.socket.on('callAccepted', signal => {
-                console.log('callAccepted')
-                this.peer.signal(signal)
+            this.rootStore.socketStore.socket.on('sendSignal', ({ signal, employeeId }) => {
+                console.log('sendSignal received')
+                this.addPeer(signal, employeeId)
+            })
+
+            this.rootStore.socketStore.socket.on('returnSignal', ({ signal, employeeId }) => {
+                console.log('returnSignal received')
+                const peer = this.peers.find(peer => peer.employeeId === employeeId)
+                peer.peer.signal(signal)
             })
         })
     }
 
-    addPeer = () => {
-        this.peer = new Peer({ initiator: false, trickle: false, stream: this.stream })
+    addPeer = (signal, employeeId) => {
+        const peer = new Peer({ initiator: false, trickle: false, stream: this.stream })
+        this.peer.signal(signal)
 
-        this.peer.on('signal', data => {
-            console.log('emiting signal')
-            this.rootStore.socketStore.socket.emit('startCall', data)
+        this.peer.on('signal', signal => {
+            console.log('returnSignal sent')
+            socket.returnSignal(signal, employeeId)
         })
 
         this.peer.on('stream', stream => {
             console.log('stream received')
             runInAction(() => {
-                this.peerAudio = stream
+                this.peerAudios = [... this.peerAudios, { stream: stream, employeeId: employeeId }]
             })
         })
 
@@ -61,30 +71,38 @@ class MediaStore {
         this.peer.on('error', (err) => {
             console.log('Peer error: ', err)
         })
+
+        runInAction(() => {
+            this.peers = [... this.peers, { peer: peer, employeeId: employeeId }]
+        })
     }
 
-    createPeer = () => {
-        this.peer = new Peer({ initiator: true, trickle: false, stream: this.stream })
+    createPeer = (employeeId) => {
+        const peer = new Peer({ initiator: true, trickle: false, stream: this.stream })
 
-        this.peer.on('signal', data => {
-            console.log('emiting signal')
-            this.rootStore.socketStore.socket.emit('startCall', data)
+        peer.on('signal', signal => {
+            console.log('sendSignal sent')
+            socket.sendSignal(signal)
         })
 
-        this.peer.on('stream', stream => {
+        peer.on('stream', stream => {
             console.log('stream received')
             runInAction(() => {
                 this.peerAudio = stream
             })
         })
 
-        this.peer.on('close', () => {
+        peer.on('close', () => {
             console.log('connection closed')
             this.peer.destroy()
         })
 
-        this.peer.on('error', (err) => {
+        peer.on('error', (err) => {
             console.log('Peer error: ', err)
+        })
+
+        runInAction(() => {
+            this.peers = [... this.peers, { peer: peer, employeeId: employeeId }]
         })
     }
 
