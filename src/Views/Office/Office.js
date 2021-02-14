@@ -46,9 +46,9 @@ const Office = observer((props) => {
             </div>
             <CoWorkers show={showCoWorkers} close={() => setShowCoWorkers(false)} />
             {showSettings && <Settings setShowSettings={setShowSettings} />}
-            {mediaStore.peerAudios.map(peerAudio => {
+            {mediaStore.peerAudios.map(peerAudio =>
                 <Player playsInline url={peerAudio.stream} playing={true} style={{ height: '0px' }} height={'0px'} width={'0px'} />
-            })}
+            )}
         </div>
     )
 })
