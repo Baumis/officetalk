@@ -7,7 +7,7 @@ const updateState = async (employeeState) => {
 }
 
 const addRoomMessage = async (content) => {
-    const response = await axios.put(`${baseUrl}/roomMessage`, content)
+    const response = await axios.post(`${baseUrl}/roomMessage`, content)
     return response.data
 }
 
