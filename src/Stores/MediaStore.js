@@ -16,7 +16,7 @@ class MediaStore {
             peerAudios: observable,
             peers: observable,
             connectToPeers: action,
-            disconnectPeer: action
+            endAllConnections: action
         })
     }
 
@@ -26,9 +26,8 @@ class MediaStore {
 
             if (this.isInitiatior()) {
                 this.rootStore.officeStore.users.forEach(employee => {
-                    if(employee.employeeId !== this.rootStore.userStore.user._id){
+                    if (employee.employeeId !== this.rootStore.userStore.user._id) {
                         console.log('createPeer')
-                        console.log(employee.employeeId, this.rootStore.userStore.user._id)
                         this.createPeer(employee.employeeId)
                     }
                 })
@@ -59,13 +58,13 @@ class MediaStore {
         peer.on('stream', stream => {
             console.log('stream received')
             runInAction(() => {
-                this.peerAudios = [... this.peerAudios, { stream: stream, employeeId: employeeId }]
+                this.peerAudios = [...this.peerAudios, { stream: stream, employeeId: employeeId }]
             })
         })
 
         peer.on('close', () => {
             console.log('connection closed')
-            this.peer.destroy()
+            this.endPeerConnection(employeeId)
         })
 
         peer.on('error', (err) => {
@@ -73,7 +72,7 @@ class MediaStore {
         })
 
         runInAction(() => {
-            this.peers = [... this.peers, { peer: peer, employeeId: employeeId }]
+            this.peers = [...this.peers, { peer: peer, employeeId: employeeId }]
         })
     }
 
@@ -88,13 +87,13 @@ class MediaStore {
         peer.on('stream', stream => {
             console.log('stream received')
             runInAction(() => {
-                this.peerAudios = [... this.peerAudios, { stream: stream, employeeId: employeeId }]
+                this.peerAudios = [...this.peerAudios, { stream: stream, employeeId: employeeId }]
             })
         })
 
         peer.on('close', () => {
             console.log('connection closed')
-            this.peer.destroy()
+            this.endPeerConnection(employeeId)
         })
 
         peer.on('error', (err) => {
@@ -102,16 +101,29 @@ class MediaStore {
         })
 
         runInAction(() => {
-            this.peers = [... this.peers, { peer: peer, employeeId: employeeId }]
+            this.peers = [...this.peers, { peer: peer, employeeId: employeeId }]
         })
-    }
-
-    disconnectPeer = () => {
-        this.peer.destroy()
     }
 
     isInitiatior = () => {
         return this.rootStore.officeStore.users.length > 1
+    }
+
+    endAllConnections = () => {
+        runInAction(() => {
+            this.peers = []
+            this.peerAudios = []
+        })
+    }
+
+    endPeerConnection = (employeeId) => {
+        const peers = this.peers.filter(user => user.employeeId !== employeeId)
+        const audios = this.peerAudios.filter(user => user.employeeId !== employeeId)
+
+        runInAction(() => {
+            this.peers = peers
+            this.peerAudios = audios
+        })
     }
 }
 
