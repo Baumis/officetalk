@@ -110,6 +110,8 @@ class MediaStore {
     }
 
     endAllConnections = () => {
+        console.log('ending all connections')
+        this.peers.forEach(peer => peer.peer.destroy())
         runInAction(() => {
             this.peers = []
             this.peerAudios = []
@@ -123,6 +125,7 @@ class MediaStore {
         runInAction(() => {
             this.peers = peers
             this.peerAudios = audios
+            console.log('after signout', this.peerAudios)
         })
     }
 }

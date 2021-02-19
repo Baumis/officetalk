@@ -42,6 +42,7 @@ class UserStore {
 
     signOut = async () => {
         await SignIn.SignOut()
+        this.rootStore.mediaStore.endAllConnections()
         runInAction(() => {
             this.user = null
         })
