@@ -32,9 +32,9 @@ class SocketStore {
             this.rootStore.officeStore.receiveMessage(message)
         })
 
-        this.socket.on('employeeStates', (employeeStates) => {
+        this.socket.on('initialData', ({ employeeStates, iceServers }) => {
             this.rootStore.officeStore.setEmployeeStates(employeeStates)
-            this.rootStore.mediaStore.connectToPeers()
+            this.rootStore.mediaStore.connectToPeers(iceServers)
         })
 
         this.socket.on('addEmployeeState', (employeeState) => {

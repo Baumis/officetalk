@@ -20,7 +20,7 @@ class MediaStore {
         })
     }
 
-    connectToPeers = async () => {
+    connectToPeers = async (iceServers) => {
         await navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {
             this.stream = stream
 
@@ -28,14 +28,14 @@ class MediaStore {
                 this.rootStore.officeStore.users.forEach(employee => {
                     if (employee.employeeId !== this.rootStore.userStore.user._id) {
                         console.log('createPeer')
-                        this.createPeer(employee.employeeId)
+                        this.createPeer(employee.employeeId, iceServers)
                     }
                 })
             }
 
             this.rootStore.socketStore.socket.on('sendSignal', ({ signal, employeeId }) => {
                 console.log('sendSignal received')
-                this.addPeer(signal, employeeId)
+                this.addPeer(signal, employeeId, iceServers)
             })
 
             this.rootStore.socketStore.socket.on('returnSignal', ({ signal, employeeId }) => {
@@ -46,8 +46,8 @@ class MediaStore {
         })
     }
 
-    addPeer = (signal, employeeId) => {
-        const peer = new Peer({ initiator: false, trickle: false, stream: this.stream })
+    addPeer = (signal, employeeId, iceServers) => {
+        const peer = new Peer({ initiator: false, trickle: false, stream: this.stream, config: { iceServers } })
         peer.signal(signal)
 
         peer.on('signal', signal => {
@@ -76,8 +76,8 @@ class MediaStore {
         })
     }
 
-    createPeer = (employeeId) => {
-        const peer = new Peer({ initiator: true, trickle: false, stream: this.stream })
+    createPeer = (employeeId, iceServers) => {
+        const peer = new Peer({ initiator: true, trickle: false, stream: this.stream, config: { iceServers } })
 
         peer.on('signal', signal => {
             console.log('sendSignal sent')
