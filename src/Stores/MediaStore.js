@@ -24,7 +24,7 @@ class MediaStore {
         await navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {
             this.stream = stream
 
-            if (this.isInitiatior()) {
+            if (this.getRoomUsers().length > 1) {
                 this.rootStore.officeStore.users.forEach(employee => {
                     if (employee.employeeId !== this.rootStore.userStore.user._id) {
                         console.log('createPeer')
@@ -105,8 +105,12 @@ class MediaStore {
         })
     }
 
-    isInitiatior = () => {
-        return this.rootStore.officeStore.users.length > 1
+    getRoomUsers = () => {
+        const myId = this.rootStore.userStore.user._id
+        const myRoom = this.rootStore.officeStore.users.find(user => user.employeeId === myId).position.room
+        const roomUsers = this.rootStore.officeStore.users.filter(user => user.position.room === myRoom)
+        console.log('Users in the room:', roomUsers)
+        return roomUsers
     }
 
     endAllConnections = () => {
