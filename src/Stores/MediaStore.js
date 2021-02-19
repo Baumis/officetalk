@@ -23,9 +23,10 @@ class MediaStore {
     connectToPeers = async (iceServers) => {
         await navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {
             this.stream = stream
+            const usersInRoom = this.getRoomUsers()
 
-            if (this.getRoomUsers().length > 1) {
-                this.rootStore.officeStore.users.forEach(employee => {
+            if (usersInRoom.length > 1) {
+                usersInRoom.forEach(employee => {
                     if (employee.employeeId !== this.rootStore.userStore.user._id) {
                         console.log('createPeer')
                         this.createPeer(employee.employeeId, iceServers)

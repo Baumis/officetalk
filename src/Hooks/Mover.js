@@ -20,25 +20,31 @@ const move = async (X, Y, roomId, employeeId) => {
 
 const roomToHall = async (user, X, Y, roomId, employeeId) => {
     const duration = moveToDoor(employeeId, user.position.room)
+    if(user.employeeId === rootstore.userStore.user._id) rootstore.mediaStore.endAllConnections()
     await delay(duration * 1000)
     if(user.employeeId === rootstore.userStore.user._id) rootstore.officeStore.clearRoomChat()
+    //if(user.employeeId === rootstore.userStore.user._id) rootstore.mediaStore.connectToPeers()
     moveInsideRoom(employeeId, X, Y, roomId)
 }
 
 const hallToRoom = async (user, X, Y, roomId) => {
     const duration = moveToDoor(user.employeeId, roomId)
+    if(user.employeeId === rootstore.userStore.user._id) rootstore.mediaStore.endAllConnections()
     await delay(duration * 1000)
     if(user.employeeId === rootstore.userStore.user._id) rootstore.officeStore.clearRoomChat()
+    //if(user.employeeId === rootstore.userStore.user._id) rootstore.mediaStore.connectToPeers()
     moveInsideRoom(user.employeeId, X, Y, roomId)
 }
 
 const roomToRoom = async (user, X, Y, roomId) => {
     const duration = moveToDoor(user.employeeId, user.position.room)
+    if(user.employeeId === rootstore.userStore.user._id) rootstore.mediaStore.endAllConnections()
     await delay(duration * 1000)
     if(user.employeeId === rootstore.userStore.user._id) rootstore.officeStore.clearRoomChat()
     const duration2 = moveToDoor(user.employeeId, roomId)
     await delay(duration2 * 1000)
     if(user.employeeId === rootstore.userStore.user._id) rootstore.officeStore.clearRoomChat()
+    //if(user.employeeId === rootstore.userStore.user._id) rootstore.mediaStore.connectToPeers()
     moveInsideRoom(user.employeeId, X, Y, roomId)
 }
 
