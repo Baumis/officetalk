@@ -107,7 +107,8 @@ class MediaStore {
 
     getRoomUsers = () => {
         const myId = this.rootStore.userStore.user._id
-        const myRoom = this.rootStore.officeStore.users.find(user => user.employeeId === myId).position.room
+        const myState = this.rootStore.officeStore.users.find(user => user.employeeId === myId)
+        const myRoom = myState.position.room
         const roomUsers = this.rootStore.officeStore.users.filter(user => user.position.room === myRoom)
         console.log('Users in the room:', roomUsers)
         return roomUsers
