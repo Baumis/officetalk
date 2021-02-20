@@ -16,23 +16,17 @@ class MediaStore {
             peerAudios: observable,
             peers: observable,
             connectToPeers: action,
-            endAllConnections: action
+            endAllConnections: action,
+            initializeMedia: action
         })
     }
 
-    connectToPeers = async (iceServers) => {
+
+    initializeMedia = async (iceServers) => {
         await navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {
             this.stream = stream
-            const usersInRoom = this.getRoomUsers()
 
-            if (usersInRoom.length > 1) {
-                usersInRoom.forEach(employee => {
-                    if (employee.employeeId !== this.rootStore.userStore.user._id) {
-                        console.log('createPeer')
-                        this.createPeer(employee.employeeId, iceServers)
-                    }
-                })
-            }
+            this.connectToPeers()
 
             this.rootStore.socketStore.socket.on('sendSignal', ({ signal, employeeId }) => {
                 console.log('sendSignal received')
@@ -42,9 +36,29 @@ class MediaStore {
             this.rootStore.socketStore.socket.on('returnSignal', ({ signal, employeeId }) => {
                 console.log('returnSignal received')
                 const peer = this.peers.find(peer => peer.employeeId === employeeId)
-                peer.peer.signal(signal)
+                if (peer) {
+                    peer.peer.signal(signal)
+                }
             })
         })
+    }
+
+    connectToPeers = async (iceServers) => {
+        const usersInRoom = this.getRoomUsers()
+
+        console.log('The users in the room: ')
+        usersInRoom.forEach(user => {
+            console.log(user.employeeId)
+        })
+
+        if (usersInRoom.length > 1) {
+            usersInRoom.forEach(employee => {
+                if (employee.employeeId !== this.rootStore.userStore.user._id) {
+                    console.log('createPeer')
+                    this.createPeer(employee.employeeId, iceServers)
+                }
+            })
+        }
     }
 
     addPeer = (signal, employeeId, iceServers) => {
@@ -111,7 +125,6 @@ class MediaStore {
         const myState = this.rootStore.officeStore.users.find(user => user.employeeId === myId)
         const myRoom = myState.position.room
         const roomUsers = this.rootStore.officeStore.users.filter(user => user.position.room === myRoom)
-        console.log('Users in the room:', roomUsers)
         return roomUsers
     }
 
@@ -131,7 +144,6 @@ class MediaStore {
         runInAction(() => {
             this.peers = peers
             this.peerAudios = audios
-            console.log('after signout', this.peerAudios)
         })
     }
 }

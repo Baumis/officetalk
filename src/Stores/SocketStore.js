@@ -34,7 +34,7 @@ class SocketStore {
 
         this.socket.on('initialData', ({ employeeStates, iceServers }) => {
             this.rootStore.officeStore.setEmployeeStates(employeeStates)
-            this.rootStore.mediaStore.connectToPeers(iceServers)
+            this.rootStore.mediaStore.initializeMedia(iceServers)
         })
 
         this.socket.on('addEmployeeState', (employeeState) => {
