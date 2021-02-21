@@ -22,7 +22,7 @@ const Room = observer((props) => {
             <div className="room-top">
                 {props.room.name}
             </div>
-            <div className="room-content" onDoubleClick={(event) => move(event)}>
+            <div className="room-content" onClick={(event) => move(event)}>
             </div>
             <div className="room-bottom">
                 <div className="room-door" id={`door${props.room._id}`}></div>

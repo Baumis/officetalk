@@ -17,7 +17,7 @@ const Hallway = observer((props) => {
         socketStore.emitPosition(position)
     }
     return (
-        <div className={`hallway ${props.first && 'first-block'} ${props.last && 'last-block'}`} onDoubleClick={(e) => move(e)}>
+        <div className={`hallway ${props.first && 'first-block'} ${props.last && 'last-block'}`} onClick={(e) => move(e)}>
         </div>
     );
 })

@@ -47,6 +47,11 @@ class SocketStore {
 
         this.socket.on('updateEmployeeState', (employeeState) => {
             const targetUser = rootstore.officeStore.users.find(user => user.employeeId === employeeState.employeeId)
+            
+            if(!targetUser){
+                return
+            }
+            
             if (targetUser.muted !== employeeState.muted) {
                 rootstore.officeStore.muteEmployee(employeeState.employeeId, employeeState.muted)
             }
