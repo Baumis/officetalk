@@ -7,6 +7,7 @@ class MediaStore {
     stream = null
     peers = []
     peerAudios = []
+    iceServers = null
 
     constructor(rootStore) {
         this.rootStore = rootStore
@@ -15,6 +16,7 @@ class MediaStore {
             stream: observable,
             peerAudios: observable,
             peers: observable,
+            iceServers: observable,
             connectToPeers: action,
             endAllConnections: action,
             initializeMedia: action
@@ -23,14 +25,15 @@ class MediaStore {
 
 
     initializeMedia = async (iceServers) => {
+        this.iceServers = iceServers
         await navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {
             this.stream = stream
 
-            this.connectToPeers(iceServers)
+            this.connectToPeers()
 
             this.rootStore.socketStore.socket.on('sendSignal', ({ signal, employeeId }) => {
                 console.log('sendSignal received')
-                this.addPeer(signal, employeeId, iceServers)
+                this.addPeer(signal, employeeId)
             })
 
             this.rootStore.socketStore.socket.on('returnSignal', ({ signal, employeeId }) => {
@@ -43,7 +46,7 @@ class MediaStore {
         })
     }
 
-    connectToPeers = async (iceServers) => {
+    connectToPeers = async () => {
         const usersInRoom = this.getRoomUsers()
 
         console.log('The users in the room: ')
@@ -55,14 +58,14 @@ class MediaStore {
             usersInRoom.forEach(employee => {
                 if (employee.employeeId !== this.rootStore.userStore.user._id) {
                     console.log('createPeer')
-                    this.createPeer(employee.employeeId, iceServers)
+                    this.createPeer(employee.employeeId, this.iceServers)
                 }
             })
         }
     }
 
-    addPeer = (signal, employeeId, iceServers) => {
-        const peer = new Peer({ initiator: false, trickle: false, stream: this.stream, config: { iceServers } })
+    addPeer = (signal, employeeId) => {
+        const peer = new Peer({ initiator: false, trickle: false, stream: this.stream, config: { iceServers: this.iceServers } })
         peer.signal(signal)
 
         peer.on('signal', signal => {
@@ -91,8 +94,8 @@ class MediaStore {
         })
     }
 
-    createPeer = (employeeId, iceServers) => {
-        const peer = new Peer({ initiator: true, trickle: false, stream: this.stream, config: { iceServers } })
+    createPeer = (employeeId) => {
+        const peer = new Peer({ initiator: true, trickle: false, stream: this.stream, config: { iceServers: this.iceServers } })
 
         peer.on('signal', signal => {
             console.log('sendSignal sent')
