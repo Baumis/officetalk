@@ -17,7 +17,7 @@ class UserStore {
             muted: observable,
             silenced: observable,
             signIn: action,
-            checkSignIn: action,
+            setUser: action,
             signOut: action,
             updateUser: action,
             setMuted: action,
@@ -32,12 +32,10 @@ class UserStore {
         return response
     }
 
-    checkSignIn = async () => {
-        const response = await SignIn.signInWithToken()
+    setUser = (user) => {
         runInAction(() => {
-            this.user = response.user
+            this.user = user
         })
-        return response
     }
 
     signOut = async () => {

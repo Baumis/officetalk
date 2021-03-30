@@ -84,7 +84,7 @@ class OfficeStore {
         console.log('current organization:', this.organization)
         return organization
     }
-
+    
     setEmployeeStates = (employees) => {
         runInAction(() => {
             this.users = employees

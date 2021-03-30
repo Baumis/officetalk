@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import './Login.css';
+import { useState } from 'react'
+import './Login.css'
 import { rootstore } from '../../index'
 import Dots from '../Office/components/Dots/Dots'
 import { AiOutlineUser, AiOutlineShop } from 'react-icons/ai'
 
 function Login(props) {
-    const { userStore, socketStore } = rootstore
+    const { userStore, socketStore, organizationStore } = rootstore
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -27,11 +27,30 @@ function Login(props) {
             return
         }
 
+        loginType === 'organization' ? signInOrganization() : signInUser()
+    }
+
+    const signInUser = async () => {
         try {
             setLoading(true)
             const response = await userStore.signIn(username, password)
             socketStore.connectToOffice(response.token, response.user.organization)
             props.navigateTo('office')
+            setLoading(false)
+
+        } catch (error) {
+            setLoading(false)
+            setPassword('')
+            alert('could not signin')
+            console.log(error)
+        }
+    }
+
+    const signInOrganization = async () => {
+        try {
+            setLoading(true)
+            await organizationStore.signIn(username, password)
+            props.navigateTo('controlPanel')
             setLoading(false)
 
         } catch (error) {
