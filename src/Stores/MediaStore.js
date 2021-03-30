@@ -26,7 +26,7 @@ class MediaStore {
         await navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {
             this.stream = stream
 
-            this.connectToPeers()
+            this.connectToPeers(iceServers)
 
             this.rootStore.socketStore.socket.on('sendSignal', ({ signal, employeeId }) => {
                 console.log('sendSignal received')
