@@ -1,0 +1,14 @@
+.controlPanel {
+    display: flex;
+    background: #f5f5f5;
+    min-height: 100vh;
+    max-height: 100vh;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.controlPanel-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}

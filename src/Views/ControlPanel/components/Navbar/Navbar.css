@@ -1,0 +1,46 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    height: 70px;
+    background: white;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-office-name {
+    margin: 0px 10px;
+    font-size: 20px;
+}
+
+.navbar-logo-image {
+    height: 40px;
+}
+
+.navbar-user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #404145;
+}
+
+.navbar-user-avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: #7a7d85;
+    background-size: cover;
+    background-position:center center;
+    margin: 0px 10px;
+}
+
+.navbar-sign-out {
+    border-left: 1px solid #e4e5e7;
+    padding: 0px 10px;
+    cursor: pointer;
+    color: #404145;
+}
