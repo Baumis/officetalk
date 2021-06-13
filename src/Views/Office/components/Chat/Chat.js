@@ -39,12 +39,12 @@ const Chat = observer((props) => {
         if (roomId === -1) {
             return "Hallway"
         } else {
-            return officeStore.office.rooms.find(room => room._id === roomId).name
+            return officeStore.organization.rooms.find(room => room._id === roomId).name
         }
     }
 
     const messagesToDisplay = () => {
-        return activeChat === 'office' ? officeStore.office.messages : officeStore.roomMessages
+        return activeChat === 'office' ? officeStore.organization.messages : officeStore.roomMessages
     }
 
     return (

@@ -23,7 +23,7 @@ const Office = observer((props) => {
         fetchOrganization()
     }, [officeStore, userStore])
 
-    if (!officeStore.office) {
+    if (!officeStore.organization) {
         return <Loading />
     }
 

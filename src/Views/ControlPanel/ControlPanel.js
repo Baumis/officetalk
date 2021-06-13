@@ -5,19 +5,28 @@ import { rootstore } from '../../index'
 
 const ControlPanel = observer((props) => {
     const { organizationStore } = rootstore
+    const [name, setName] = useState('')
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
-    const createOffice = async () => {
-        await organizationStore.createOffice()
+    const createEmployee = async () => {
+        await organizationStore.createEmployee(
+            {
+                name: name,
+                username: username,
+                password: password
+            }
+        )
     }
 
-    if (!organizationStore.office) {
+    /*if (!organizationStore.office) {
         console.log(organizationStore.office)
         return (
             <div className="office">
                 <div onClick={() => createOffice()}>Create office</div>
             </div>
         )
-    }
+    }*/
 
     return (
         <div className="office">
@@ -28,6 +37,24 @@ const ControlPanel = observer((props) => {
                         {employee}
                     </div>
                 )}
+                <div>
+                    <input
+                        placeholder={'Full Name'}
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
+                    />
+                    <input
+                        placeholder={'Username'}
+                        value={username}
+                        onChange={(event) => setUsername(event.target.value)}
+                    />
+                    <input
+                        placeholder={'Password'}
+                        value={password}
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
+                </div>
+                <div onClick={() => createEmployee()}>Create Employee</div>
             </div>
         </div>
     )

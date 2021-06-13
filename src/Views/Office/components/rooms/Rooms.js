@@ -8,12 +8,12 @@ import Furniture from '../Furniture/Furniture'
 
 const Rooms = observer(() => {
     const officeStore = rootstore.officeStore
-    const roomsCount = officeStore.office.rooms.length
+    const roomsCount = officeStore.organization.rooms.length
 
     return (
         <div className="rooms" id="rooms">
             <div className="rooms-row">
-                {officeStore.office.rooms.map((room, index) => {
+                {officeStore.organization.rooms.map((room, index) => {
                     if (index % 2 === 0) {
                         return (
                             <Room
@@ -26,7 +26,7 @@ const Rooms = observer(() => {
             </div>
             <Hallway/>
             <div className="rooms-row">
-                {officeStore.office.rooms.map((room, index) => {
+                {officeStore.organization.rooms.map((room, index) => {
                     if (index % 2 === 1) {
                         return (
                             <Room

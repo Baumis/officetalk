@@ -1,21 +1,20 @@
 import { makeObservable, observable, action, runInAction } from 'mobx'
 import SignIn from '../Services/SignIn'
-import Office from '../Services/Office'
+import Employee from '../Services/Employee'
 
 class OrganizationStore {
     rootStore = null
     organization = null
-    office = null
 
     constructor(rootStore) {
         this.rootStore = rootStore
         makeObservable(this, {
             rootStore: observable,
             organization: observable,
-            office: observable,
             signIn: action,
             setOrganization: action,
             signOut: action,
+            createEmployee: action
         })
     }
 
@@ -36,9 +35,6 @@ class OrganizationStore {
     setOrganization = (organization) => {
         runInAction(() => {
             this.organization = organization
-            if (organization.office) {
-                this.office = organization.office
-            }
         })
     }
 
@@ -49,10 +45,10 @@ class OrganizationStore {
         })
     }
 
-    createOffice = async () => {
-        const response = await Office.createOffice()
+    createEmployee = async (employee) => {
+        const response = await Employee.createEmployee(this.organization._id, employee)
         runInAction(() => {
-            this.office = response
+            console.log('RESPONSE: ', response)
         })
     }
 

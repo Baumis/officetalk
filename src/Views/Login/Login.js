@@ -81,7 +81,7 @@ function Login(props) {
                     <div className="login-input-title">
                     </div>
                     <input
-                        placeholder={'Email'}
+                        placeholder={'Username'}
                         value={username}
                         onChange={(event) => setUsername(event.target.value)}
                     />

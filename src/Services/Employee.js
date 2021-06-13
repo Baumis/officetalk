@@ -6,5 +6,10 @@ const updateEmployee = async (employee) => {
     return response.data
 }
 
-const services = { updateEmployee }
+const createEmployee = async (id, employee) => {
+    const response = await axios.post(`${baseUrl}/`, employee)
+    return response.data
+}
+
+const services = { updateEmployee, createEmployee }
 export default services

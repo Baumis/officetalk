@@ -4,13 +4,13 @@ import Message from '../Services/Message'
 
 class OfficeStore {
     rootStore = null
-    office = null
     organization = null
     roomMessages = []
 
     users = []
 
-    furnitures = [
+    furnitures=[]
+    /*furnitures = [
         {
             type: 'meeting-table',
             height: '150px',
@@ -46,13 +46,12 @@ class OfficeStore {
             position: {x: 58, y: 103},
             direction: 'right'
         },
-    ]
+    ]*/
 
     constructor(rootStore) {
         this.rootStore = rootStore
         makeObservable(this, {
             rootStore: observable,
-            office: observable,
             organization: observable,
             users: observable,
             roomMessages: observable,
@@ -75,10 +74,6 @@ class OfficeStore {
 
         runInAction(() => {
             this.organization = organization
-        })
-
-        runInAction(() => {
-            this.office = organization.office
         })
 
         console.log('current organization:', this.organization)
@@ -107,11 +102,11 @@ class OfficeStore {
         try {
             const response = await Message.sendOfficeMessage({ content: content })
             if (response) {
-                if (!this.office.messages.find(msg => msg._id === response._id)) {
-                    let officeClone = JSON.parse(JSON.stringify(this.office))
+                if (!this.organization.messages.find(msg => msg._id === response._id)) {
+                    let officeClone = JSON.parse(JSON.stringify(this.organization))
                     officeClone.messages.unshift(response)
                     runInAction(() => {
-                        this.office = officeClone
+                        this.organization = officeClone
                     })
                 }
                 return response
@@ -122,11 +117,11 @@ class OfficeStore {
     }
 
     receiveMessage = (message) => {
-        if (!this.office.messages.find(msg => msg._id === message._id)) {
-            const officeClone = JSON.parse(JSON.stringify(this.office))
+        if (!this.organization.messages.find(msg => msg._id === message._id)) {
+            const officeClone = JSON.parse(JSON.stringify(this.organization))
             officeClone.messages.unshift(message)
             runInAction(() => {
-                this.office = officeClone
+                this.organization = officeClone
             })
         }
     }
