@@ -58,6 +58,11 @@ class UserStore {
 
     setMuted = (value) => {
         this.muted = value
+        if(value){
+            this.rootStore.mediaStore.removeAudioStreams()
+        } else {
+            this.rootStore.mediaStore.addAudioStreams()
+        }
     }
 
     setSilenced = (value) => {

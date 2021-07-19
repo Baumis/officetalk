@@ -19,7 +19,9 @@ class MediaStore {
             iceServers: observable,
             connectToPeers: action,
             endAllConnections: action,
-            initializeMedia: action
+            initializeMedia: action,
+            removeAudioStreams: action,
+            addAudioStreams: action
         })
     }
 
@@ -148,6 +150,15 @@ class MediaStore {
             this.peers = peers
             this.peerAudios = audios
         })
+    }
+
+    removeAudioStreams = () => {
+        this.peers.forEach(peer => console.log(peer.peer.streams[0].getAudioTracks()[0]))
+        this.peers.forEach(peer => peer.peer.streams[0].getAudioTracks()[0].enabled = false)
+    }
+
+    addAudioStreams = () => {
+        this.peers.forEach(peer => peer.peer.streams[0].getAudioTracks()[0].enabled = true)
     }
 }
 
