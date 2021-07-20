@@ -8,8 +8,8 @@ const Toggler = (props) => {
             <label className="switch">
                 <input
                     type={"checkbox"}
-                    onChange={() => props.onChange(!props.value)}
-                    value={props.value}
+                    onChange={props.onChange}
+                    checked={props.value}
                 />
                 <span className="slider round"></span>
             </label>

@@ -13,7 +13,6 @@ const Settings = observer((props) => {
     const [background, setBackground] = useState('transparent')
     const [unsaved, setUnsaved] = useState(false)
     const [user, setUser] = useState(JSON.parse(JSON.stringify(userStore.user)))
-    const [pushToTalk, setPushToTalk] = useState(true)
     const [PTKey, setPTKey] = useState("0")
     const [listenForKey, setListenForKey] = useState(false)
     const [saveing, setSaveing] = useState(false)
@@ -24,13 +23,16 @@ const Settings = observer((props) => {
 
     const startListening = () => {
         setListenForKey(true)
-        document.addEventListener('keypress', registerKey)
+        document.addEventListener('keydown', registerKey)
     }
 
     const registerKey = (event) => {
-        setPTKey(event.keyCode)
+        setUser({ ...user, 'PTKey': event.code })
         setListenForKey(false)
         document.removeEventListener('keypress', registerKey)
+        if (!unsaved) {
+            setUnsaved(true)
+        }
     }
 
     const changeValue = (property, event) => {
@@ -38,6 +40,14 @@ const Settings = observer((props) => {
             setUnsaved(true)
         }
         setUser({ ...user, [property]: event.target.value })
+    }
+
+    const changePushToTalk = () => {
+        if (!unsaved) {
+            setUnsaved(true)
+        }
+        setUser({ ...user, 'pushToTalk': !user.pushToTalk })
+        console.log(user)
     }
 
     const save = async () => {
@@ -87,16 +97,15 @@ const Settings = observer((props) => {
                         <div className="settings-input-row">
                             <div className="settings-input-label">Push to talk</div>
                             <Toggler
-                                value={pushToTalk}
-                                onChange={setPushToTalk}
+                                value={user.pushToTalk}
+                                onChange={() => changePushToTalk()}
                             />
                             <div className="PT-row">
-                                <div className={`change-button ${pushToTalk && 'change-button-disabled'}`} onClick={() => startListening()}>change</div>
+                                <div className={`change-button ${!user.pushToTalk && 'change-button-disabled'}`} onClick={() => startListening()}>change</div>
                                 <input
                                     readOnly
-                                    disabled={pushToTalk}
-                                    value={!listenForKey? PTKey: 'press any key'}
-                                    onChange={event => setPTKey(event.target.value)}
+                                    disabled={!user.pushToTalk}
+                                    value={!listenForKey? user.PTKey: 'press any key'}
                                 />
                             </div>
                         </div>

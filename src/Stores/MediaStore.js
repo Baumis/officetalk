@@ -8,6 +8,7 @@ class MediaStore {
     peers = []
     peerAudios = []
     iceServers = null
+    PTActivated = true
 
     constructor(rootStore) {
         this.rootStore = rootStore
@@ -21,7 +22,9 @@ class MediaStore {
             endAllConnections: action,
             initializeMedia: action,
             removeAudioStreams: action,
-            addAudioStreams: action
+            addAudioStreams: action,
+            PTActive: action,
+            PTDeactive: action
         })
     }
 
@@ -70,6 +73,10 @@ class MediaStore {
         const peer = new Peer({ initiator: false, trickle: false, stream: this.stream, config: { iceServers: this.iceServers } })
         peer.signal(signal)
 
+        if (!this.PTActivated || this.rootstore.userStore.muted) {
+            peer.streams[0].getAudioTracks()[0].enabled = false
+        }
+
         peer.on('signal', signal => {
             console.log('returnSignal sent')
             socket.returnSignal(employeeId, signal)
@@ -98,6 +105,10 @@ class MediaStore {
 
     createPeer = (employeeId) => {
         const peer = new Peer({ initiator: true, trickle: false, stream: this.stream, config: { iceServers: this.iceServers } })
+
+        if (!this.PTActivated || this.rootstore.userStore.muted) {
+            peer.streams[0].getAudioTracks()[0].enabled = false
+        }
 
         peer.on('signal', signal => {
             console.log('sendSignal sent')
@@ -158,7 +169,29 @@ class MediaStore {
     }
 
     addAudioStreams = () => {
+        if (this.PTActivated) {
+            this.peers.forEach(peer => peer.peer.streams[0].getAudioTracks()[0].enabled = true)
+        }
+    }
+
+    PTActive = () => {
+        if (this.rootStore.userStore.user.muted || this.PTActivated) {
+            return
+        }
+
+        console.log("PT activated")
         this.peers.forEach(peer => peer.peer.streams[0].getAudioTracks()[0].enabled = true)
+        this.PTActivated = true
+    }
+
+    PTDeactive = () => {
+        if (this.rootStore.userStore.user.muted) {
+            return
+        }
+        
+        console.log("PT deactivated")
+        this.peers.forEach(peer => peer.peer.streams[0].getAudioTracks()[0].enabled = false)
+        this.PTActivated = false
     }
 }
 

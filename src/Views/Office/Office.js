@@ -17,10 +17,27 @@ const Office = observer((props) => {
     const [showSettings, setShowSettings] = useState(false)
 
     useEffect(() => {
-        const fetchOrganization = async () => {
+        const initializeOffice = async () => {
             await officeStore.fetchOffice(userStore.user.organization)
+            if (userStore.user.pushToTalk) {
+                mediaStore.PTDeactive()
+            }
         }
-        fetchOrganization()
+        const PTPressListener = (event) => {
+            if (event.code == userStore.user.PTKey) {
+                mediaStore.PTActive()
+            }
+        }
+
+        const PTReleaseListener = (event) => {
+            if (event.code == userStore.user.PTKey) {
+                mediaStore.PTDeactive()
+            }
+        }
+
+        initializeOffice()
+        document.addEventListener('keydown', PTPressListener)
+        document.addEventListener('keyup', PTReleaseListener)
     }, [officeStore, userStore])
 
     if (!officeStore.organization) {
