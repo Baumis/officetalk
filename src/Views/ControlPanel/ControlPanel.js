@@ -1,8 +1,8 @@
 import './ControlPanel.css'
 import { observer } from 'mobx-react'
-import { rootstore } from '../../index'
 import Navbar from './components/Navbar/Navbar'
 import Employees from './components/Employees/Employees'
+import OfficeEditor from './components/OfficeEditor/OfficeEditor'
 
 const ControlPanel = observer((props) => {
     return (
@@ -12,6 +12,7 @@ const ControlPanel = observer((props) => {
             />
             <div className="controlPanel-body">
                 <Employees />
+                <OfficeEditor />
             </div>
         </div>
     )

@@ -38,6 +38,11 @@ const Office = observer((props) => {
         initializeOffice()
         document.addEventListener('keydown', PTPressListener)
         document.addEventListener('keyup', PTReleaseListener)
+
+        return function cleanup () {
+            document.removeEventListener('keydown', PTPressListener)
+            document.removeEventListener('keyup', PTReleaseListener)
+        }
     }, [officeStore, userStore])
 
     if (!officeStore.organization) {
