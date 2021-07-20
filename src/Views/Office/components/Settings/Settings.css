@@ -66,6 +66,10 @@
     margin-right: 20px;
 }
 
+.settings-Heading {
+    font-size: 30px;
+}
+
 .settings-bottom-row {
     display: flex;
     justify-content: center;
@@ -88,4 +92,29 @@
 .unsaved-changes {
     background: #1CBF73;
     cursor: pointer;
+}
+
+.PT-row {
+    display: flex;
+    align-items: center;
+}
+
+.change-button {
+    margin: 0px 10px 0px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid #1CBF73;
+    color: #1CBF73;
+    height: 36px;
+    width: 100px;
+    background: white;
+    cursor: pointer;
+}
+
+.change-button-disabled {
+    border: 1px solid #7a7d8580;
+    cursor: unset;
+    color: #7a7d8580; 
 }

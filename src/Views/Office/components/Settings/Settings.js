@@ -4,18 +4,34 @@ import { rootstore } from '../../../../index'
 import { FiX } from 'react-icons/fi'
 import { useEffect, useState } from 'react'
 import Dots from '../Dots/Dots'
+import Toggler from './Slider/Toggler'
 
 const Settings = observer((props) => {
+
     const userStore = rootstore.userStore
     const officeStore = rootstore.officeStore
     const [background, setBackground] = useState('transparent')
     const [unsaved, setUnsaved] = useState(false)
     const [user, setUser] = useState(JSON.parse(JSON.stringify(userStore.user)))
+    const [pushToTalk, setPushToTalk] = useState(true)
+    const [PTKey, setPTKey] = useState("0")
+    const [listenForKey, setListenForKey] = useState(false)
     const [saveing, setSaveing] = useState(false)
 
     useEffect(() => {
         setBackground('rgba(64, 65, 69, 0.5)')
     }, [])
+
+    const startListening = () => {
+        setListenForKey(true)
+        document.addEventListener('keypress', registerKey)
+    }
+
+    const registerKey = (event) => {
+        setPTKey(event.keyCode)
+        setListenForKey(false)
+        document.removeEventListener('keypress', registerKey)
+    }
 
     const changeValue = (property, event) => {
         if (!unsaved) {
@@ -47,6 +63,7 @@ const Settings = observer((props) => {
                 <div className="settings-content">
                     <div className="settings-content-row">
                         <div className="settings-avatar" style={{ backgroundImage: `url(${user.avatar})` }}></div>
+                        <div className="settings-Heading">{user.name}</div>
                     </div>
                     <div className="settings-content-row">
                         <div className="settings-input-row">
@@ -64,6 +81,24 @@ const Settings = observer((props) => {
                                 value={user.name}
                                 onChange={(event) => changeValue('name', event)}
                             />
+                        </div>
+                    </div>
+                    <div className="settings-content-row">
+                        <div className="settings-input-row">
+                            <div className="settings-input-label">Push to talk</div>
+                            <Toggler
+                                value={pushToTalk}
+                                onChange={setPushToTalk}
+                            />
+                            <div className="PT-row">
+                                <div className={`change-button ${pushToTalk && 'change-button-disabled'}`} onClick={() => startListening()}>change</div>
+                                <input
+                                    readOnly
+                                    disabled={pushToTalk}
+                                    value={!listenForKey? PTKey: 'press any key'}
+                                    onChange={event => setPTKey(event.target.value)}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
