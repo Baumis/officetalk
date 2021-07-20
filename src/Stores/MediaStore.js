@@ -73,7 +73,9 @@ class MediaStore {
         const peer = new Peer({ initiator: false, trickle: false, stream: this.stream, config: { iceServers: this.iceServers } })
         peer.signal(signal)
 
-        if (!this.PTActivated || this.rootstore.userStore.muted) {
+        if (this.rootStore.userStore.muted) {
+            peer.streams[0].getAudioTracks()[0].enabled = false
+        } else if (this.rootStore.userStore.user.pushToTalk && !this.PTActivated) {
             peer.streams[0].getAudioTracks()[0].enabled = false
         }
 
@@ -106,7 +108,9 @@ class MediaStore {
     createPeer = (employeeId) => {
         const peer = new Peer({ initiator: true, trickle: false, stream: this.stream, config: { iceServers: this.iceServers } })
 
-        if (!this.PTActivated || this.rootstore.userStore.muted) {
+        if (this.rootStore.userStore.muted) {
+            peer.streams[0].getAudioTracks()[0].enabled = false
+        } else if (this.rootStore.userStore.user.pushToTalk && !this.PTActivated) {
             peer.streams[0].getAudioTracks()[0].enabled = false
         }
 
