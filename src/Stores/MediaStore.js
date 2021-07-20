@@ -179,7 +179,7 @@ class MediaStore {
     }
 
     PTActive = () => {
-        if (this.rootStore.userStore.user.muted || this.PTActivated) {
+        if (this.rootStore.userStore.muted || this.PTActivated) {
             return
         }
 
@@ -189,7 +189,7 @@ class MediaStore {
     }
 
     PTDeactive = () => {
-        if (this.rootStore.userStore.user.muted) {
+        if (this.rootStore.userStore.muted) {
             return
         }
         
