@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './Login.css'
 import { rootstore } from '../../index'
 import Dots from '../Office/components/Dots/Dots'
-import { AiOutlineUser, AiOutlineShop } from 'react-icons/ai'
+import { AiOutlineUser, AiOutlineShop, AiOutlineLock } from 'react-icons/ai'
 
 function Login(props) {
     const { userStore, socketStore, organizationStore } = rootstore
@@ -63,46 +63,59 @@ function Login(props) {
 
     return (
         <div className="login">
-            <div className="login-title">
-                Sign in to OfficeTalk
-            </div>
             <div className="login-card block-shadow">
-                <div className="login-card-tabs">
-                    <div className={`login-card-tab ${isActive('user')}`} onClick={() => setLoginType('user')}>
-                        <AiOutlineUser size={20} />
-                        <div className="login-tab-text">User</div>
-                    </div>
-                    <div className={`login-card-tab ${isActive('organization')}`} onClick={() => setLoginType('organization')}>
-                        <AiOutlineShop size={20} />
-                        <div className="login-tab-text">Organization</div>
-                    </div>
+                <div className="login-card-left">
                 </div>
-                <div className="login-input-row">
-                    <div className="login-input-title">
+                <div className="login-card-right">
+                    <div className="login-title">
+                        Sign in to OfficeTalk
                     </div>
-                    <input
-                        placeholder={'Username'}
-                        value={username}
-                        onChange={(event) => setUsername(event.target.value)}
-                    />
-                </div>
-                <div className="login-input-row">
-                    <div className="login-input-title">
+                    <div className="login-card-tabs">
+                        <div className="login-card-tabs-row">
+                            <div className={`login-card-tab ${isActive('user')}`} onClick={() => setLoginType('user')}>
+                                <div className="login-tab-text">Employee</div>
+                            </div>
+                            <div className={`login-card-tab ${isActive('organization')}`} onClick={() => setLoginType('organization')}>
+                                <div className="login-tab-text">Organization</div>
+                            </div>
+                        </div>
+                        <div className="tab-slider-row">
+                            <span className={`tab-slider ${loginType === 'organization' ? 'tab-slider-org': 'tab-slider-user'}`}></span>
+                        </div>
                     </div>
-                    <input
-                        placeholder={'Password'}
-                        value={password}
-                        type={'password'}
-                        onChange={(event) => setPassword(event.target.value)}
-                    />
-                </div>
-                <div className="login-input-row">
-                    <div className="OTButton" style={{ background: loginType === 'organization' && '#F74040' }} onClick={() => signIn()}>
-                        {loading ?
-                            <Dots white />
-                            :
-                            `Sign in`
-                        }
+                    <div className="login-input-row">
+                        <div className="login-input-title">
+                        </div>
+                        <div className={`${loginType === 'organization' ? 'login-input-org' : 'login-input'}`}>
+                            <AiOutlineUser style={{ fontSize: '22px', color: '#7a7d85' }} />
+                            <input
+                                placeholder={'Username'}
+                                value={username}
+                                onChange={(event) => setUsername(event.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="login-input-row">
+                        <div className="login-input-title">
+                        </div>
+                        <div className={`${loginType === 'organization' ? 'login-input-org' : 'login-input'}`}>
+                            <AiOutlineLock style={{ fontSize: '22px', color: '#7a7d85' }} />
+                            <input
+                                placeholder={'Password'}
+                                value={password}
+                                type={'password'}
+                                onChange={(event) => setPassword(event.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="login-input-row">
+                        <div className="OTButton login-button" style={{ background: loginType === 'organization' && '#0466a3' }} onClick={() => signIn()}>
+                            {loading ?
+                                <Dots white />
+                                :
+                                `Sign in`
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
