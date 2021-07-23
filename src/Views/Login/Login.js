@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './Login.css'
 import { rootstore } from '../../index'
 import Dots from '../Office/components/Dots/Dots'
-import { AiOutlineUser, AiOutlineShop, AiOutlineLock } from 'react-icons/ai'
+import { AiOutlineUser, AiOutlineLock } from 'react-icons/ai'
 
 function Login(props) {
     const { userStore, socketStore, organizationStore } = rootstore
@@ -10,6 +10,17 @@ function Login(props) {
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
     const [loginType, setLoginType] = useState('user')
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKey)
+        return () => document.removeEventListener('keydown', handleKey)
+    }, [username, password])
+
+    const handleKey = (event) => {
+        if (event.keyCode === 13) {
+            signIn()
+        }
+    }
 
     const isActive = (tab) => {
         if (tab === 'user' && loginType === 'user') {
@@ -80,7 +91,7 @@ function Login(props) {
                             </div>
                         </div>
                         <div className="tab-slider-row">
-                            <span className={`tab-slider ${loginType === 'organization' ? 'tab-slider-org': 'tab-slider-user'}`}></span>
+                            <span className={`tab-slider ${loginType === 'organization' ? 'tab-slider-org' : 'tab-slider-user'}`}></span>
                         </div>
                     </div>
                     <div className="login-input-row">

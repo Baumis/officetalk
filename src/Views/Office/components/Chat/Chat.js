@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { observer } from 'mobx-react'
 import './Chat.css';
 import Message from './Message/Message'
@@ -11,6 +11,17 @@ const Chat = observer((props) => {
     const [sending, setSending] = useState(false)
     const [activeChat, setActiveChat] = useState('office')
     const { officeStore, userStore } = rootstore
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKey)
+        return () => document.removeEventListener('keydown', handleKey)
+    }, [message])
+
+    const handleKey = (event) => {
+        if (event.keyCode === 13) {
+            sendMessage()
+        }
+    }
 
     const sendMessage = async () => {
         setSending(true)

@@ -105,9 +105,9 @@
 }
 
 .login-input-row {
-display: flex;
-flex-direction: column;
-margin: 6px 0px;
+    display: flex;
+    flex-direction: column;
+    margin: 6px 0px;
 }
 
 .login-input-row input {

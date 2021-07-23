@@ -47,9 +47,13 @@
 .chat-input-container {
     display: flex;
     flex: 1;
-    background: #e4e5e7;
     border: 1px solid #d6d8db;
+    transition: border 0.5s;
     border-radius: 8px;
+}
+
+.chat-input-container:focus-within {
+    border: 1px solid #1CBF73;
 }
 
 .chat-controls input {
