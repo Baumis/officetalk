@@ -12,7 +12,7 @@ const CoWorkers = observer((props) => {
     }
 
     return (
-        <div className="coworkers block-shadow" style={{ right: props.show ? '0px' : '-250px' }}>
+        <div className="coworkers" style={{ right: props.show ? '0px' : '-250px' }}>
             <div className="coworkers-header">
                 Co-workers
             </div>

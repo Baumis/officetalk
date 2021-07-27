@@ -84,7 +84,7 @@ const Chat = observer((props) => {
                         {sending ?
                             <Dots />
                             :
-                            <AiOutlineSend size={30} />
+                            <AiOutlineSend size={25} />
                         }
                     </div>
                 </div>

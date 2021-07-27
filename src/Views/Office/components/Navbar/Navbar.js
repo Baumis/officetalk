@@ -34,7 +34,11 @@ const Navbar = observer((props) => {
         if (roomId === -1) {
             return "Hallway"
         } else {
-            return officeStore.organization.rooms.find(room => room._id === roomId).name
+            let roomName = officeStore.organization.rooms.find(room => room._id === roomId).name
+            if (roomName.length > 20) {
+                roomName = roomName.slice(0, 20) + '...'
+            }
+            return roomName
         }
     }
 

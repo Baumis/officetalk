@@ -61,9 +61,9 @@ const Office = observer((props) => {
                     <Rooms />
                 </div>
             </div>
-            <div className="office-toggle-coworkers" onClick={() => setShowCoWorkers(!showCoWorkers)}>
+            <div className="office-toggle-coworkers block-shadow" onClick={() => setShowCoWorkers(!showCoWorkers)}>
                 <FiUsers style={{ marginRight: '3px' }} size={18} />
-                {`Co-workers (${officeStore.organization.employees.length})`}
+                {`Co-workers`}
             </div>
             <CoWorkers show={showCoWorkers} close={() => setShowCoWorkers(false)} />
             {showSettings && <Settings setShowSettings={setShowSettings} />}

@@ -37,10 +37,10 @@ const Avatar = observer((props) => {
             border: `${props.user.employeeId === userStore.user._id ? '2' : '1'}px solid ${props.user.employeeId === userStore.user._id ? '#1CBF73' : 'black'}`,
             backgroundImage: `url(${getUserAvatar()})`
         }}>
-            <div className="avatar-shadow" style={{backgroundColor: getIcon() ? '#00000041': 'transparent'}}>
+            <div className="avatar-shadow block-shadow" style={{backgroundColor: getIcon() ? '#00000041': 'transparent'}}>
             {getIcon()}
             </div>
-            <div className="avatar-info">
+            <div className="avatar-info block-shadow">
                 <div className="avatar-info-name">
                     {employeeInfo.name}
                 </div>

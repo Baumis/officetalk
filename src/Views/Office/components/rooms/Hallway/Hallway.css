@@ -2,8 +2,7 @@
     display: flex;
     height: 120px;
     min-height: 120px;
-    background: #e4e5e7;
-    background-image:url('../../../../../Assets/Carpet.jpg');
+    background: #7a7d85;
     box-sizing: border-box;
     border-left: 4px solid #404145;
     border-right: 4px solid #404145;

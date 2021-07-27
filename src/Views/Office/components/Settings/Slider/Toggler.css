@@ -1,5 +1,7 @@
 .toggler {
-    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .switch {
@@ -42,11 +44,11 @@
   }
   
   input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #0466a3;
   }
   
   input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #0466a3;
   }
   
   input:checked + .slider:before {

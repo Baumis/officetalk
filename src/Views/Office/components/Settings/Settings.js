@@ -96,16 +96,16 @@ const Settings = observer((props) => {
                     <div className="settings-content-row">
                         <div className="settings-input-row">
                             <div className="settings-input-label">Push to talk</div>
-                            <Toggler
-                                value={user.pushToTalk}
-                                onChange={() => changePushToTalk()}
-                            />
                             <div className="PT-row">
+                                <Toggler
+                                    value={user.pushToTalk}
+                                    onChange={() => changePushToTalk()}
+                                />
                                 <div className={`change-button ${!user.pushToTalk && 'change-button-disabled'}`} onClick={() => startListening()}>change</div>
                                 <input
                                     readOnly
                                     disabled={!user.pushToTalk}
-                                    value={!listenForKey? user.PTKey: 'press any key'}
+                                    value={!listenForKey ? user.PTKey : 'press any key'}
                                 />
                             </div>
                         </div>
