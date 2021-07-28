@@ -35,13 +35,29 @@ const Office = observer((props) => {
             }
         }
 
+        const PTPressMouseListener = (event) => {
+            if (event.button == userStore.user.PTKey) {
+                mediaStore.PTActive()
+            }
+        }
+
+        const PTReleaseMouseListener = (event) => {
+            if (event.button == userStore.user.PTKey) {
+                mediaStore.PTDeactive()
+            }
+        }
+
         initializeOffice()
         document.addEventListener('keydown', PTPressListener)
         document.addEventListener('keyup', PTReleaseListener)
+        document.addEventListener('mousedown', PTPressMouseListener)
+        document.addEventListener('mouseup', PTReleaseMouseListener)
 
-        return function cleanup () {
+        return function cleanup() {
             document.removeEventListener('keydown', PTPressListener)
             document.removeEventListener('keyup', PTReleaseListener)
+            document.removeEventListener('mousedown', PTPressMouseListener)
+            document.removeEventListener('mouseup', PTReleaseMouseListener)
         }
     }, [officeStore, userStore])
 

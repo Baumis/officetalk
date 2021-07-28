@@ -24,12 +24,25 @@ const Settings = observer((props) => {
     const startListening = () => {
         setListenForKey(true)
         document.addEventListener('keydown', registerKey)
+        document.addEventListener('mousedown', registerMouse)
     }
 
     const registerKey = (event) => {
         setUser({ ...user, 'PTKey': event.code })
         setListenForKey(false)
-        document.removeEventListener('keypress', registerKey)
+        document.removeEventListener('keydown', registerKey)
+        document.removeEventListener('mousedown', registerMouse)
+        if (!unsaved) {
+            setUnsaved(true)
+        }
+    }
+
+    const registerMouse = (event) => {
+        console.log(event)
+        setUser({ ...user, 'PTKey': event.button })
+        setListenForKey(false)
+        document.removeEventListener('keydown', registerKey)
+        document.removeEventListener('mousedown', registerMouse)
         if (!unsaved) {
             setUnsaved(true)
         }
