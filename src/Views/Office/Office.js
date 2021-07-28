@@ -15,7 +15,7 @@ const Office = observer((props) => {
     const { officeStore, userStore, mediaStore } = rootstore
     const [showCoWorkers, setShowCoWorkers] = useState(false)
     const [showSettings, setShowSettings] = useState(false)
-    let timePushed = null
+    let pushDuration = null
 
     useEffect(() => {
         const { ipcRenderer } = window.require('electron')
@@ -27,37 +27,17 @@ const Office = observer((props) => {
                 mediaStore.PTDeactive()
             }
         }
-        const PTPressListener = (event) => {
-            if (event.code == userStore.user.PTKey) {
-                mediaStore.PTActive()
-            }
-        }
-
-        const PTReleaseListener = (event) => {
-            if (event.code == userStore.user.PTKey) {
-                mediaStore.PTDeactive()
-            }
-        }
 
         ipcRenderer.on('PT', () => {
-            if (timePushed) {
-                mediaStore.PTActive()
-                clearTimeout(timePushed)
-                timePushed = setTimeout(() => mediaStore.PTDeactive(), 500)
-            } else {
-                mediaStore.PTActive()
-                timePushed = setTimeout(() => mediaStore.PTDeactive(), 500)
+            if (pushDuration) {
+                clearTimeout(pushDuration)
             }
+
+            mediaStore.PTActive()
+            pushDuration = setTimeout(() => mediaStore.PTDeactive(), 500)
         })
 
         initializeOffice()
-        //document.addEventListener('keydown', PTPressListener)
-        //document.addEventListener('keyup', PTReleaseListener)
-
-        return function cleanup() {
-            //document.removeEventListener('keydown', PTPressListener)
-            //document.removeEventListener('keyup', PTReleaseListener)
-        }
     }, [officeStore, userStore])
 
     if (!officeStore.organization) {

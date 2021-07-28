@@ -1,4 +1,4 @@
-const { app, BrowserWindow, globalShortcut, ipcMain } = require('electron')
+const { app, BrowserWindow, globalShortcut, ipcMain, Menu } = require('electron')
 const isDev = require('electron-is-dev')
 
 let win = null
@@ -8,15 +8,20 @@ function createWindow() {
     height: 800,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
+      autoHideMenuBar: true
     }
   })
+
+  Menu.setApplicationMenu(null)
 
   win.loadURL(
     isDev
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
+
+  win.webContents.openDevTools()
 }
 
 app.on('window-all-closed', function () {
@@ -24,10 +29,7 @@ app.on('window-all-closed', function () {
 })
 
 ipcMain.on('PTKey', (event, arg) => {
-  //console.log(arg)
   let key = arg.replace('Key', '')
-  let key = arg.replace('Left', '')
-  let key = arg.replace('Right', '')
 
   console.log(key)
   globalShortcut.unregisterAll()
