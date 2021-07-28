@@ -19,7 +19,7 @@ const Chat = observer((props) => {
 
     const handleKey = (event) => {
         if (event.keyCode === 13) {
-            sendMessage()
+            activeChat === 'office' ? sendMessage() : sendRoomMessage()
         }
     }
 
