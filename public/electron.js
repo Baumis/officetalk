@@ -23,10 +23,27 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 
+ipcMain.on('PTKey', (event, arg) => {
+  //console.log(arg)
+  let key = arg.replace('Key', '')
+  let key = arg.replace('Left', '')
+  let key = arg.replace('Right', '')
+
+  console.log(key)
+  globalShortcut.unregisterAll()
+  try {
+    globalShortcut.register(key, () => {
+      win.webContents.send('PT')
+    })
+  } catch (e) {
+    console.log(e)
+  }
+})
+
 app.whenReady().then(() => {
-  globalShortcut.register('p', () => {
+  /*globalShortcut.register('p', () => {
     win.webContents.send('PT')
-  })
+  })*/
 }).then(createWindow)
 
 app.on('activate', function () {

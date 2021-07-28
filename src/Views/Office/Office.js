@@ -19,6 +19,7 @@ const Office = observer((props) => {
 
     useEffect(() => {
         const { ipcRenderer } = window.require('electron')
+        ipcRenderer.send('PTKey', userStore.user.PTKey)
 
         const initializeOffice = async () => {
             await officeStore.fetchOffice(userStore.user.organization)
@@ -50,12 +51,12 @@ const Office = observer((props) => {
         })
 
         initializeOffice()
-        document.addEventListener('keydown', PTPressListener)
-        document.addEventListener('keyup', PTReleaseListener)
+        //document.addEventListener('keydown', PTPressListener)
+        //document.addEventListener('keyup', PTReleaseListener)
 
         return function cleanup() {
-            document.removeEventListener('keydown', PTPressListener)
-            document.removeEventListener('keyup', PTReleaseListener)
+            //document.removeEventListener('keydown', PTPressListener)
+            //document.removeEventListener('keyup', PTReleaseListener)
         }
     }, [officeStore, userStore])
 
